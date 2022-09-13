@@ -1,4 +1,4 @@
-#+title: MarioGK' NixOS & Nix-Darwin System Configuration Flake
+#+title: MarioGK' NixOS System Configuration Flake
 #+description: General information about my flake and how to set it up
 #+author: Matthias Benaets
 
