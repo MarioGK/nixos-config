@@ -32,8 +32,6 @@ in
   boot.kernelPackages = pkgs.linuxPackages_zen;
   # Trade security for raw performance
   boot.kernelParams = [ "mitigations=off" ];
-  # Include redistributable firmware like audio codecs
-  hardware.enableRedistributableFirmware = true;
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -46,9 +44,8 @@ in
     "1.1.1.1"
     "8.8.8.8"
   ];
-  # Use the iwd backend to avoid deprecated wireless extensions
+  networking.wireless.iwd.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  services.iwd.enable = true;
 
   # Set your time zone
   time.timeZone = "Europe/Lisbon";
@@ -86,7 +83,9 @@ in
   #  style = "adwaita-dark";
   #};
 
-  # Enable sound with pipewire.
+  # Audio settings
+  # Include redistributable firmware like audio codecs
+  hardware.enableRedistributableFirmware = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -94,6 +93,11 @@ in
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    #powerOnBoot = true;
   };
 
   # User account
@@ -197,6 +201,11 @@ in
     inputs.zen-browser.packages.${pkgs.system}.default
     # Provide libpipewire for Qt multimedia
     pkgs.pipewire
+    # Audio
+    pavucontrol # PulseAudio Volume Control
+    pamixer # Command-line mixer for PulseAudio
+    bluez # Bluetooth support
+    bluez-tools # Bluetooth tools
   ];
 
   # Ensure Aspire workload is available with the installed .NET SDKs
