@@ -26,11 +26,17 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
   # Bootloader
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "mitigations=off" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    }
+  };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Use the latest Zen kernel available in nixpkgs
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  # Trade security for raw performance
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "mitigations=off" ];
 
   nix.settings.experimental-features = [
