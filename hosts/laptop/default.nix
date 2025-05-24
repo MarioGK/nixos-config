@@ -28,8 +28,10 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
+    # `intel-media-driver` is already included in the default set of
+    # 32-bit graphics drivers. Including it again leads to file
+    # collisions when building the `graphics-drivers-32bit` package.
     extraPackages32 = with pkgs; [
-      intel-media-driver
       vaapiIntel
       libvdpau-va-gl
     ];
