@@ -127,6 +127,11 @@ in
     aspnetCombined
   ];
 
+  # Ensure Aspire workload is available with the installed .NET SDKs
+  system.activationScripts.dotnet-aspire-install.text = ''
+    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install aspire"
+  '';
+
   # Default system state version
   system.stateVersion = "25.05";
 }
