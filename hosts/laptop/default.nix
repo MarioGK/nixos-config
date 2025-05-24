@@ -22,4 +22,11 @@
     EnableHDR=true
     MaxFPS=120
   '';
+
+  # Intel specific performance tools for this notebook
+  environment.systemPackages = with pkgs; [
+    intel-media-driver
+    intel-compute-runtime
+    intel-gpu-tools
+  ];
 }

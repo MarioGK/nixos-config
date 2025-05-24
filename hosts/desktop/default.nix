@@ -7,4 +7,10 @@
   ];
 
   networking.hostName = "desktop";
+
+  # AMD specific tools for the desktop
+  environment.systemPackages = with pkgs; [
+    amdvlk
+    radeontop
+  ];
 }

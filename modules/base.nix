@@ -30,6 +30,8 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   # Use the latest Linux kernel available in nixpkgs
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Trade security for raw performance
+  boot.kernelParams = [ "mitigations=off" ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -178,6 +180,9 @@ in
     haruna
     wayland-utils
     wl-clipboard
+    libva-utils
+    vulkan-tools
+    powertop
     # dotnet
     dotnetCombined
     aspnetCombined
