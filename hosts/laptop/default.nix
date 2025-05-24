@@ -1,4 +1,10 @@
-{ config, lib, pkgs, unstablePkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  unstablePkgs,
+  ...
+}:
 
 let
   # Custom package for alsa-ucm-conf 1.2.14
@@ -30,11 +36,6 @@ in
 
   environment = {
     sessionVariables.ALSA_CONFIG_UCM2 = "${alsa-ucm-conf-latest}/share/alsa/ucm2";
-  };
-
-  hardware.intelgpu = {
-    driver = lib.mkIf (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.8") "xe";
-    vaapiDriver = "intel-media-driver";
   };
 
   hardware.graphics = {
@@ -69,5 +70,8 @@ in
     alsa-ucm-conf-latest
   ];
 
-  hardware.firmware = [ unstablePkgs.sof-firmware pkgs.alsa-firmware ];
+  hardware.firmware = [
+    unstablePkgs.sof-firmware
+    pkgs.alsa-firmware
+  ];
 }
