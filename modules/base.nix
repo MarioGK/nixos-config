@@ -144,6 +144,13 @@ in
     chown -R mariogk:mariogk /etc/nixos
   '';
 
+  # Ensure the PowerShell profile in this repository is installed for the user
+  system.activationScripts.powershell-profile.text = ''
+    profileDir="/home/mariogk/.config/powershell"
+    install -Dm644 ${../files/powershell/profile.ps1} "$profileDir/Microsoft.PowerShell_profile.ps1"
+    chown mariogk:mariogk "$profileDir/Microsoft.PowerShell_profile.ps1"
+  '';
+
   # Default system state version
   system.stateVersion = "25.05";
 }
