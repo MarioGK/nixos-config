@@ -39,8 +39,8 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # Disable CUPS printer service.
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -109,8 +109,18 @@
     btop
     dotnet-sdk_9
     dotnet-sdk_10
+    dotnet-runtime_9
+    dotnet-runtime_10
+    aspnetcore-runtime_9
+    aspnetcore-runtime_10
     powershell
     oh-my-posh
+    jetbrains.rider
+    leg-cord
+  ];
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
   # Default system state version
