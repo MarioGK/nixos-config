@@ -12,10 +12,16 @@
         inherit system;
         modules = [ hostPath ];
       };
+
+      laptop = mkHost ./hosts/laptop;
+      desktop = mkHost ./hosts/desktop;
     in {
       nixosConfigurations = {
-        laptop = mkHost ./hosts/laptop;
-        desktop = mkHost ./hosts/desktop;
+        laptop = laptop;
+        desktop = desktop;
+        # Provide a default configuration under the name 'nixos'
+        # so that plain `nixos-rebuild switch` works out of the box.
+        nixos = laptop;
       };
     };
 }
