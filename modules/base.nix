@@ -80,6 +80,8 @@
     git
     htop
     btop
+    dotnet-sdk_9
+    dotnet-sdk_10
   ];
 
   # Default system state version
