@@ -3,6 +3,7 @@
   imports = [
     ../../modules/base.nix
     ../../hardware/laptop.nix
+    ../../modules/tlp.nix
   ];
 
   networking.hostName = "mario-laptop";
