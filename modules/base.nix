@@ -26,18 +26,14 @@
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Disable the X11 windowing system; Wayland will be used instead.
+  services.xserver.enable = false;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -109,6 +105,7 @@
     btop
     dotnet-sdk_9
     dotnet-sdk_10
+    kscreen
     powershell
     oh-my-posh
   ];
