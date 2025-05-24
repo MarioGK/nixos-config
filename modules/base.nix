@@ -44,6 +44,9 @@ in
     "1.1.1.1"
     "8.8.8.8"
   ];
+  # Use the iwd backend to avoid deprecated wireless extensions
+  networking.networkmanager.wifi.backend = "iwd";
+  services.iwd.enable = true;
 
   # Set your time zone
   time.timeZone = "Europe/Lisbon";
