@@ -17,21 +17,6 @@
 
   powerManagement.enable = true;
 
-  services.pipewire = {
-    jack.enable = true;
-    wireplumber.enable = true;
-  };
-
-  environment = {
-    sessionVariables.ALSA_CONFIG_UCM2 = "${pkgs.alsa-ucm-conf}/share/alsa/ucm2";
-  };
-
-  # Enable the Intel GPU driver without relying on X11
-  hardware.intelgpu = {
-    driver = lib.mkIf (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.8") "xe";
-    vaapiDriver = "intel-media-driver";
-  };
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
