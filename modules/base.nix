@@ -197,6 +197,9 @@ in
   # Ensure Aspire workload is available with the installed .NET SDKs
   system.activationScripts.dotnet-aspire-install.text = ''
     runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install aspire"
+    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasm-tools"
+    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasm-experimental"
+    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasi-experimental"
   '';
 
   # Ensure user mariogk owns the configuration directory for git operations
