@@ -5,21 +5,6 @@
   ...
 }:
 
-let
-  # Custom package for alsa-ucm-conf 1.2.14
-  # Can be removed when 1.2.14 gets included in nixpkgs
-  alsa-ucm-conf-latest = pkgs.alsa-ucm-conf.overrideAttrs (oldAttrs: {
-    version = "1.2.14";
-    src = pkgs.fetchurl {
-      url = "mirror://alsa/lib/alsa-ucm-conf-1.2.14.tar.bz2";
-      hash = "sha256-MumAn1ktkrl4qhAy41KTwzuNDx7Edfk3Aiw+6aMGnCE=";
-    };
-    postPatch = ''
-      sed -i 's#/sbin/modprobe#${pkgs.kmod}/bin/modprobe#' ucm2/HDA/HDA.conf 2>/dev/null || true
-      sed -i 's#/usr/sbin/modprobe#${pkgs.kmod}/bin/modprobe#' ucm2/HDA/HDA.conf 2>/dev/null || true
-    '';
-  });
-in
 {
   imports = [
     ../../modules/base.nix
