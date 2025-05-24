@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  unstablePkgs,
   ...
 }:
 
@@ -71,7 +70,7 @@ in
   ];
 
   hardware.firmware = [
-    unstablePkgs.sof-firmware
+    pkgs.sof-firmware
     pkgs.alsa-firmware
   ];
 }
