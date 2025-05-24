@@ -5,7 +5,11 @@ cd /etc/nixos
 
 # Update configuration repository
 if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-  git pull --rebase
+  if git diff-index --quiet HEAD --; then
+    git pull --rebase
+  else
+    echo "Skipping git pull due to local changes"
+  fi
 fi
 
 # Determine flake host based on system hostname
