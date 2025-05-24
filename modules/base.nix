@@ -103,21 +103,15 @@
     git
     htop
     btop
-    dotnet-sdk_9
-    dotnet-sdk_10
-    dotnet-runtime_9
-    dotnet-runtime_10
-    aspnetcore-runtime_9
-    aspnetcore-runtime_10
-    kscreen
-    powershell
-    oh-my-posh
+    pkgs.powershell
+    pkgs.oh-my-posh
+    pkgs.nerd-fonts.jetbrains-mono
     jetbrains.rider
-    leg-cord
-  ];
-
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    pkgs.legcord
+    #kde
+    kdePackages.kscreen
+    # dotnet
+    pkgs.dotnetCorePackages.sdk_10_0-bin
   ];
 
   # Default system state version
