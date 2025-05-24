@@ -162,6 +162,9 @@ in
     jetbrains.rider
     pkgs.legcord
     pkgs.nixfmt-rfc-style
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.pt_BR
     # KDE
     kdePackages.kscreen
     kdePackages.partitionmanager
