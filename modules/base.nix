@@ -115,12 +115,15 @@ in
     git
     htop
     btop
+    # Media
+    pkgs.youtube-music
+    #
     pkgs.powershell
     pkgs.oh-my-posh
     pkgs.nerd-fonts.jetbrains-mono
     jetbrains.rider
     pkgs.legcord
-    #kde
+    # KDE
     kdePackages.kscreen
     # dotnet
     dotnetCombined
