@@ -11,6 +11,7 @@
     ../../hardware/laptop.nix
     ../../modules/tlp.nix
     ../../modules/update-on-shutdown.nix
+    inputs.nixos-hardware.nixosModules.lenovo-yoga-7-14ILL10
   ];
 
   networking.hostName = "mario-laptop";

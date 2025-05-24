@@ -9,6 +9,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
@@ -18,6 +19,7 @@
       zen-browser,
       home-manager,
       plasma-manager,
+      nixos-hardware,
     }:
     let
       system = "x86_64-linux";
