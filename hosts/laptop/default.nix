@@ -9,6 +9,8 @@
 
   networking.hostName = "mario-laptop";
 
+  powerManagement.enable = true;
+
   # Force display settings for the laptop
   environment.sessionVariables = {
     QT_SCALE_FACTOR = "1.6";
