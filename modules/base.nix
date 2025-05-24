@@ -22,6 +22,9 @@ let
   );
 in
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -202,6 +205,12 @@ in
   system.activationScripts.terminal-icons-install.text = ''
     runuser -l mariogk -c 'pwsh -NoProfile -NonInteractive -Command "if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) { Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser -Force }"'
   '';
+
+  home-manager = {
+    useGlobalPkgs = true;
+    extraSpecialArgs = { inherit inputs; };
+    users.mariogk = import ../home/mariogk.nix;
+  };
 
   # Default system state version
   system.stateVersion = "25.05";
