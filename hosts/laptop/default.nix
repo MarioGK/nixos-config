@@ -23,6 +23,11 @@ in
 
   powerManagement.enable = true;
 
+  services.pipewire = {
+    jack.enable = true;
+    wireplumber.enable = true;
+  };
+
   environment = {
     sessionVariables.ALSA_CONFIG_UCM2 = "${alsa-ucm-conf-latest}/share/alsa/ucm2";
   };
