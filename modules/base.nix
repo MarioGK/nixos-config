@@ -1,4 +1,13 @@
 { config, pkgs, ... }:
+
+let
+  dotnetCombined =
+    (with pkgs.dotnetCorePackages;
+      combinePackages [ dotnet_10.sdk dotnet_9.sdk ]);
+  aspnetCombined =
+    (with pkgs.dotnetCorePackages;
+      combinePackages [ aspnetcore_10_0-bin aspnetcore_9_0 ]);
+in
 {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -90,6 +99,9 @@
   users.defaultUserShell = pkgs.powershell;
   environment.shells = with pkgs; [ powershell ];
 
+  # Set global environment variables for .NET
+  environment.sessionVariables.DOTNET_ROOT = "${dotnetCombined}/share/dotnet";
+
   # Install firefox
   programs.firefox.enable = true;
 
@@ -111,7 +123,8 @@
     #kde
     kdePackages.kscreen
     # dotnet
-    pkgs.dotnetCorePackages.sdk_10_0-bin
+    dotnetCombined
+    aspnetCombined
   ];
 
   # Default system state version
