@@ -25,14 +25,14 @@ in
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
-  # Bootloader
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "mitigations=off" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-    }
+    };
   };
 
   nix.settings.experimental-features = [
@@ -41,13 +41,20 @@ in
   ];
 
   # Enable networking
-  networking.networkmanager.enable = true;
-  networking.networkmanager.insertNameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-  ];
-  networking.wireless.iwd.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
+  networking = {
+    # Use the iNet Wireless Daemon instead of wpa_supplicant
+    wireless.iwd.enable = true;
+
+    # Enable NetworkManager and configure it to use iwd
+    networkmanager = {
+      enable = true;
+      insertNameservers = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+      wifi.backend = "iwd";
+    };
+  };
 
   # Set your time zone
   time.timeZone = "Europe/Lisbon";
