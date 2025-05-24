@@ -19,6 +19,10 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.insertNameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
 
   # Set your time zone
   time.timeZone = "Europe/Lisbon";
@@ -130,6 +134,8 @@ in
     pkgs.legcord
     # KDE
     kdePackages.kscreen
+    kdePackages.partitionmanager
+    kdePackages.filelight
     # dotnet
     dotnetCombined
     aspnetCombined
