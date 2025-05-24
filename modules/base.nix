@@ -32,6 +32,8 @@ in
   boot.kernelPackages = pkgs.linuxPackages_zen;
   # Trade security for raw performance
   boot.kernelParams = [ "mitigations=off" ];
+  # Include redistributable firmware like audio codecs
+  hardware.enableRedistributableFirmware = true;
 
   nix.settings.experimental-features = [
     "nix-command"
