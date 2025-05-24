@@ -23,7 +23,7 @@
   };
 
   environment = {
-    sessionVariables.ALSA_CONFIG_UCM2 = "${alsa-ucm-conf-latest}/share/alsa/ucm2";
+    sessionVariables.ALSA_CONFIG_UCM2 = "${pkgs.alsa-ucm-conf}/share/alsa/ucm2";
   };
 
   # Enable the Intel GPU driver without relying on X11
@@ -61,7 +61,7 @@
     intel-compute-runtime
     intel-gpu-tools
     sof-firmware
-    alsa-ucm-conf-latest
+    alsa-ucm-conf
   ];
 
   hardware.firmware = [
