@@ -14,15 +14,18 @@
   outputs = inputs@{ self, nixpkgs, zen-browser, home-manager, plasma-manager }:
     let
       system = "x86_64-linux";
-      mkHost = hostPath: nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [ hostPath ];
-        specialArgs = { inherit inputs; };
-      };
+      mkHost =
+        hostPath:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ hostPath ];
+          specialArgs = { inherit inputs; };
+        };
 
       laptop = mkHost ./hosts/laptop;
       desktop = mkHost ./hosts/desktop;
-    in {
+    in
+    {
       nixosConfigurations = {
         laptop = laptop;
         desktop = desktop;

@@ -17,7 +17,6 @@
     #GDK_SCALE = "1.6";
   };
 
-
   environment.etc."xdg/kwinrc".text = ''
     [Compositing]
     EnableHDR=true

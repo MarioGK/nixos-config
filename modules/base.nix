@@ -1,12 +1,25 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  dotnetCombined =
-    (with pkgs.dotnetCorePackages;
-      combinePackages [ dotnet_10.sdk dotnet_9.sdk ]);
-  aspnetCombined =
-    (with pkgs.dotnetCorePackages;
-      combinePackages [ aspnetcore_10_0-bin aspnetcore_9_0 ]);
+  dotnetCombined = (
+    with pkgs.dotnetCorePackages;
+    combinePackages [
+      dotnet_10.sdk
+      dotnet_9.sdk
+    ]
+  );
+  aspnetCombined = (
+    with pkgs.dotnetCorePackages;
+    combinePackages [
+      aspnetcore_10_0-bin
+      aspnetcore_9_0
+    ]
+  );
 in
 {
   imports = [
@@ -18,7 +31,10 @@ in
   # Use the latest Linux kernel available in nixpkgs
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -51,10 +67,17 @@ in
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.dconf.enable = true;
 
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    oxygen
+  ];
 
-  # Disable CUPS printer service.
-  services.printing.enable = false;
+  #qt = {
+  #  enable = true;
+  #  platformTheme = "gnome";
+  #  style = "adwaita-dark";
+  #};
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -70,7 +93,10 @@ in
   users.users.mariogk = {
     isNormalUser = true;
     description = "Mario Gabriell Karaziaki";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
@@ -135,10 +161,23 @@ in
     pkgs.bun
     jetbrains.rider
     pkgs.legcord
+    pkgs.nixfmt-rfc-style
     # KDE
     kdePackages.kscreen
     kdePackages.partitionmanager
     kdePackages.filelight
+    kdePackages.kcalc
+    kdePackages.kcharselect # Tool to select and copy special characters from all installed fonts
+    kdePackages.kcolorchooser # A small utility to select a color
+    kdePackages.kolourpaint # Easy-to-use paint program
+    kdePackages.ksystemlog # KDE SystemLog Application
+    kdePackages.sddm-kcm
+    kdiff3
+    kdePackages.isoimagewriter
+    hardinfo2 # System information and benchmarks for Linux systems
+    haruna
+    wayland-utils
+    wl-clipboard
     # dotnet
     dotnetCombined
     aspnetCombined
@@ -176,4 +215,3 @@ in
   # Default system state version
   system.stateVersion = "25.05";
 }
-
