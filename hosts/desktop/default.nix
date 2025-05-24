@@ -12,5 +12,6 @@
   environment.systemPackages = with pkgs; [
     amdvlk
     radeontop
+    lact
   ];
 }
