@@ -61,6 +61,7 @@
       kdePackages.kate
       thunderbird
     ];
+    shell = pkgs.powershell;
   };
 
   # Grant user mariogk privileged actions without authentication via polkit
@@ -89,6 +90,10 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "mariogk";
 
+  # Set PowerShell as the default shell for all users
+  users.defaultUserShell = pkgs.powershell;
+  environment.shells = with pkgs; [ powershell ];
+
   # Install firefox
   programs.firefox.enable = true;
 
@@ -104,6 +109,8 @@
     btop
     dotnet-sdk_9
     dotnet-sdk_10
+    powershell
+    oh-my-posh
   ];
 
   # Default system state version
