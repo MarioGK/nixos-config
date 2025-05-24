@@ -28,8 +28,8 @@ in
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Use the latest Linux kernel available in nixpkgs
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use the latest Zen kernel available in nixpkgs
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   # Trade security for raw performance
   boot.kernelParams = [ "mitigations=off" ];
 
