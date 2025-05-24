@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   dotnetCombined =
@@ -125,6 +125,7 @@ in
     # dotnet
     dotnetCombined
     aspnetCombined
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   # Ensure Aspire workload is available with the installed .NET SDKs
@@ -135,3 +136,4 @@ in
   # Default system state version
   system.stateVersion = "25.05";
 }
+
