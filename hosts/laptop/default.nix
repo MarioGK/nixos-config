@@ -4,6 +4,7 @@
     ../../modules/base.nix
     ../../hardware/laptop.nix
     ../../modules/tlp.nix
+    ../../modules/update-on-shutdown.nix
   ];
 
   networking.hostName = "mario-laptop";
