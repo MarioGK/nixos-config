@@ -190,6 +190,8 @@ in
     dotnetCombined
     aspnetCombined
     inputs.zen-browser.packages.${pkgs.system}.default
+    # Provide libpipewire for Qt multimedia
+    pkgs.pipewire
   ];
 
   # Ensure Aspire workload is available with the installed .NET SDKs
