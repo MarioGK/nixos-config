@@ -133,6 +133,11 @@ in
     runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install aspire"
   '';
 
+  # Ensure user mariogk owns the configuration directory for git operations
+  system.activationScripts.nixos-directory-permissions.text = ''
+    chown -R mariogk:mariogk /etc/nixos
+  '';
+
   # Default system state version
   system.stateVersion = "25.05";
 }
