@@ -1,4 +1,4 @@
-{ config, pkgs, unstablePkgs, ... }:
+{ config, lib, pkgs, unstablePkgs, ... }:
 
 let
   # Custom package for alsa-ucm-conf 1.2.14
