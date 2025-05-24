@@ -7,6 +7,23 @@ let
   aspnetCombined =
     (with pkgs.dotnetCorePackages;
       combinePackages [ aspnetcore_10_0-bin aspnetcore_9_0 ]);
+
+  vscodeInsidersFhs =
+    (pkgs.vscode-with-extensions.override {
+      vscodeExtensions = with pkgs.vscode-extensions; [
+        ms-dotnettools.csdevkit
+        github.copilot
+        github.copilot-chat
+      ];
+      vscode = (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
+        src = builtins.fetchTarball {
+          url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
+          sha256 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        };
+        version = "latest";
+        buildInputs = oldAttrs.buildInputs ++ [ pkgs.krb5 ];
+      });
+    }).fhs;
 in
 {
   # Bootloader
@@ -131,6 +148,7 @@ in
     pkgs.vorta
     pkgs.bun
     jetbrains.rider
+    vscodeInsidersFhs
     pkgs.legcord
     # KDE
     kdePackages.kscreen
