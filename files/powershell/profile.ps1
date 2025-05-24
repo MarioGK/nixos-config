@@ -133,6 +133,14 @@ Set-Alias -Name dnsln -Value New-DotnetSolution
 Set-Alias USER $env:USER
 Set-Alias HOME $env:HOME
 
+# Ensure common system paths are available so commands like 'cat' and 'htop' work
+$requiredPaths = "/run/wrappers/bin:/run/current-system/sw/bin:/usr/bin:/bin"
+foreach ($p in $requiredPaths -split ':') {
+    if (-not ($env:PATH -split ':' | Where-Object { $_ -eq $p })) {
+        $env:PATH += ":$p"
+    }
+}
+
 # Add Bun global apps to PATH
 $env:PATH += ";$HOME/.bun/bin"
 #endregion
