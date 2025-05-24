@@ -76,8 +76,12 @@
   security.sudo.extraRules = [
     {
       users = [ "mariogk" ];
-      commands = [ "ALL" ];
-      options = [ "NOPASSWD" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
     }
   ];
 
