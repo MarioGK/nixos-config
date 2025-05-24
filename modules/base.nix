@@ -119,10 +119,11 @@ in
     btop
     # Media
     pkgs.youtube-music
-    #
+    # Tools
     pkgs.powershell
     pkgs.oh-my-posh
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.vorta
     jetbrains.rider
     pkgs.legcord
     # KDE
