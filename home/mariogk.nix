@@ -18,8 +18,8 @@
   programs.home-manager.enable = true;
 
   programs.plasma = {
+    enable = true;
     workspace = {
-      enable = true;
       lookAndFeel = "org.kde.breezedark.desktop";
     };
   };
