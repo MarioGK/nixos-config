@@ -28,8 +28,6 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
     }
 }
 
-# Update VS Code Insiders
-function update-code { sudo rm -r ~/.cache/paru/clone/visual-studio-code-insiders-bin && paru -S visual-studio-code-insiders-bin --rebuild}
 
 # .NET Development shortcuts
 function dnb { dotnet build $args }
@@ -45,22 +43,6 @@ function dwr { dotnet watch run $args }
 # SDK management functions
 function Get-DotnetSdks {
     dotnet --list-sdks
-}
-
-function Set-DotnetSdk {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$Version
-    )
-
-    $globalJson = @{
-        sdk = @{
-            version = $Version
-        }
-    }
-
-    $globalJson | ConvertTo-Json | Out-File -FilePath "global.json"
-    Write-Host "Set .NET SDK to version $Version for this directory" -ForegroundColor Green
 }
 
 # Solution explorer function
@@ -141,7 +123,6 @@ function Open-DotnetProject {
 
 # Add useful aliases
 Set-Alias -Name dnsdks -Value Get-DotnetSdks
-Set-Alias -Name dnsetsdk -Value Set-DotnetSdk
 Set-Alias -Name dnprojs -Value Get-DotnetProjects
 Set-Alias -Name dnopen -Value Open-DotnetProject
 Set-Alias -Name dnsln -Value New-DotnetSolution

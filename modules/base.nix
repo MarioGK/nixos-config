@@ -121,9 +121,11 @@ in
     pkgs.youtube-music
     # Tools
     pkgs.powershell
+    pkgs.zoxide
     pkgs.oh-my-posh
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.vorta
+    pkgs.bun
     jetbrains.rider
     pkgs.legcord
     # KDE
@@ -149,6 +151,11 @@ in
     profileDir="/home/mariogk/.config/powershell"
     install -Dm644 ${../files/powershell/profile.ps1} "$profileDir/Microsoft.PowerShell_profile.ps1"
     chown mariogk:mariogk "$profileDir/Microsoft.PowerShell_profile.ps1"
+  '';
+
+  # Install Terminal-Icons module for PowerShell if missing
+  system.activationScripts.terminal-icons-install.text = ''
+    runuser -l mariogk -c 'pwsh -NoProfile -NonInteractive -Command "if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) { Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser -Force }"'
   '';
 
   # Default system state version
