@@ -63,6 +63,24 @@
     ];
   };
 
+  # Grant user mariogk privileged actions without authentication via polkit
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user == "mariogk") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
+  # Allow user mariogk to use sudo without password prompts
+  security.sudo.extraRules = [
+    {
+      users = [ "mariogk" ];
+      commands = [ "ALL" ];
+      options = [ "NOPASSWD" ];
+    }
+  ];
+
   # Automatic login
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "mariogk";
