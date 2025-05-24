@@ -28,5 +28,6 @@
     intel-media-driver
     intel-compute-runtime
     intel-gpu-tools
+    sof-firmware
   ];
 }
