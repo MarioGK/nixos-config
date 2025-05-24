@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
@@ -8,8 +13,6 @@
   home.homeDirectory = "/home/mariogk";
 
   programs.home-manager.enable = true;
-
-  home.packages = with pkgs; [ neovim ];
 
   programs.plasma = {
     workspace = {

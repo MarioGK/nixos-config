@@ -11,7 +11,14 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, zen-browser, home-manager, plasma-manager }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      zen-browser,
+      home-manager,
+      plasma-manager,
+    }:
     let
       system = "x86_64-linux";
       mkHost =
