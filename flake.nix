@@ -25,6 +25,7 @@
         # Alias for laptop so that `nixos-rebuild switch` works on host
         # `mario-laptop` without explicitly specifying the flake output
         mario-laptop = laptop;
+        mario-desktop = desktop;
         # Provide a default configuration under the name 'nixos'
         # so that plain `nixos-rebuild switch` works out of the box.
         nixos = laptop;
