@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   dotnetCombined =
@@ -125,8 +125,10 @@ in
     # dotnet
     dotnetCombined
     aspnetCombined
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   # Default system state version
   system.stateVersion = "25.05";
 }
+
