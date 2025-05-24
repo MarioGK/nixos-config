@@ -8,3 +8,7 @@ This repository contains NixOS configuration using flakes. The hosts are organiz
 
 These machines use the configurations in `hosts/laptop` and `hosts/desktop` respectively.
 
+##
+
+It should avoid xserver and x11 and try to do everything with wayland only
+
