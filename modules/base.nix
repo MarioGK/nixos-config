@@ -94,9 +94,10 @@ in
 
   # Audio settings
   # Include redistributable firmware like audio codecs
-  hardware.enableRedistributableFirmware = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
+  hardware.enableRedistributableFirmware = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;

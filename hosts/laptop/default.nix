@@ -50,4 +50,6 @@
     intel-gpu-tools
     sof-firmware
   ];
+
+  hardware.firmware = [ unstablePkgs.sof-firmware pkgs.alsa-firmware ];
 }
