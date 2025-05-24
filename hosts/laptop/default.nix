@@ -1,4 +1,16 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstablePkgs, ... }:
+
+let
+  # Custom package for alsa-ucm-conf 1.2.14
+  # Can be removed when 1.2.14 gets included in nixpkgs
+  alsa-ucm-conf-latest = pkgs.alsa-ucm-conf.overrideAttrs (oldAttrs: {
+    version = "1.2.14";
+    src = pkgs.fetchurl {
+      url = "mirror://alsa/lib/alsa-ucm-conf-1.2.14.tar.bz2";
+      hash = "sha256-MumAn1ktkrl4qhAy41KTwzuNDx7Edfk3Aiw+6aMGnCE=";
+    };
+  });
+in
 {
   imports = [
     ../../modules/base.nix
@@ -11,10 +23,8 @@
 
   powerManagement.enable = true;
 
-  # Force display settings for the laptop
-  environment.sessionVariables = {
-    #QT_SCALE_FACTOR = "1.6";
-    #GDK_SCALE = "1.6";
+  environment = {
+    sessionVariables.ALSA_CONFIG_UCM2 = "${alsa-ucm-conf-latest}/share/alsa/ucm2";
   };
 
   hardware.intelgpu = {
@@ -49,6 +59,7 @@
     intel-compute-runtime
     intel-gpu-tools
     sof-firmware
+    alsa-ucm-conf-latest
   ];
 
   hardware.firmware = [ unstablePkgs.sof-firmware pkgs.alsa-firmware ];
