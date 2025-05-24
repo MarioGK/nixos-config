@@ -47,6 +47,8 @@ in
       libvdpau-va-gl
     ];
 
+  };
+
   environment.etc."xdg/kwinrc".text = ''
     [Compositing]
     EnableHDR=true
