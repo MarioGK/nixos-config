@@ -152,6 +152,7 @@
     libva-utils
     vulkan-tools
     pkgs.zoxide
+    pkgs.nixfmt-rfc-style
     # Audio
     pkgs.pipewire
     bluez
