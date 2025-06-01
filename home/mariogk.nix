@@ -20,7 +20,7 @@
   # and will be merged via the import.
 
   home.packages = [
-    pkgs.vscode-insiders # This will pick up the overlaid package via the imported module
+    config.nixpkgs.pkgs.vscode-insiders # This will pick up the overlaid package via the imported module
   ];
 
   programs.plasma = {
