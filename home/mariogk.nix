@@ -49,14 +49,22 @@
     };
   };
 
-  home.file."${config.xdg.configHome}" = {
-    source = ../dotfiles;
-    recursive = true;
-  };
+  home.file = {
+    # PowerShell profile
+    ".config/powershell/profile.ps1" = {
+      source = ./dotfiles/profile.ps1;
+      # Ensure the target directory is created if it doesn't exist.
+      # This might not be strictly necessary if Home Manager handles it,
+      # but it's good practice for clarity.
+      # It's often handled by home.activation scripts or by home-manager itself.
+      # For now, let's rely on home-manager's default behavior for parent directory creation.
+    };
+    # Add other specific dotfiles here in the future
+  }; # <= ADDED SEMICOLON HERE
 
   home.activation = {
     terminal-icons-install = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.powershell}/bin/pwsh -NoProfile -NonInteractive -Command "if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) { Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser -Force }"
     '';
-  };
+  }; # <= ADDED SEMICOLON HERE
 }
