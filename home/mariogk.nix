@@ -7,6 +7,7 @@
 {
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
+    #../../modules/dotnet.nix
   ];
 
   home.username = "mariogk";

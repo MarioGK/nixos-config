@@ -4,9 +4,6 @@
   inputs,
   ...
 }:
-
-let
-in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -72,12 +69,6 @@ in
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     oxygen
   ];
-
-  #qt = {
-  #  enable = true;
-  #  platformTheme = "gnome";
-  #  style = "adwaita-dark";
-  #};
 
   # Audio settings
   # Include redistributable firmware like audio codecs
