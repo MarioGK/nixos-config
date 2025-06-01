@@ -6,24 +6,11 @@
 }:
 
 let
-  dotnetCombined = (
-    with pkgs.dotnetCorePackages;
-    combinePackages [
-      dotnet_10.sdk
-      dotnet_9.sdk
-    ]
-  );
-  aspnetCombined = (
-    with pkgs.dotnetCorePackages;
-    combinePackages [
-      aspnetcore_10_0-bin
-      aspnetcore_9_0
-    ]
-  );
 in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./dotnet.nix
   ];
 
   boot = {
@@ -157,9 +144,6 @@ in
   users.defaultUserShell = pkgs.powershell;
   environment.shells = with pkgs; [ powershell ];
 
-  # Set global environment variables for .NET
-  environment.sessionVariables.DOTNET_ROOT = "${dotnetCombined}/share/dotnet";
-
   # Install firefox
   programs.firefox.enable = true;
 
@@ -207,9 +191,6 @@ in
     libva-utils
     vulkan-tools
     powertop
-    # dotnet
-    dotnetCombined
-    aspnetCombined
     inputs.zen-browser.packages.${pkgs.system}.default
     # Provide libpipewire for Qt multimedia
     pkgs.pipewire
@@ -219,14 +200,6 @@ in
     bluez # Bluetooth support
     bluez-tools # Bluetooth tools
   ];
-
-  # Ensure Aspire workload is available with the installed .NET SDKs
-  system.activationScripts.dotnet-aspire-install.text = ''
-    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install aspire"
-    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasm-tools"
-    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasm-experimental"
-    runuser -l mariogk -c "${dotnetCombined}/bin/dotnet workload install wasi-experimental"
-  '';
 
   # Ensure the PowerShell profile in this repository is installed for the user
   system.activationScripts.powershell-profile.text = ''
