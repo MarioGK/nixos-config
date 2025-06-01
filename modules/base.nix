@@ -99,8 +99,6 @@
       "wheel"
     ];
     packages = with pkgs; [
-      kdePackages.kate
-      thunderbird
     ];
     shell = pkgs.powershell;
   };
@@ -143,66 +141,19 @@
 
   # Packages installed in system profile
   environment.systemPackages = with pkgs; [
-    nano
-    wget
-    git
-    htop
-    btop
-    # Media
-    pkgs.youtube-music
     # Tools
     pkgs.powershell
-    pkgs.zoxide
-    pkgs.oh-my-posh
-    pkgs.nerd-fonts.jetbrains-mono
-    pkgs.vorta
-    pkgs.bun
-    jetbrains.rider
-    pkgs.legcord
-    pkgs.nixfmt-rfc-style
-    hunspell
-    hunspellDicts.en_US
-    hunspellDicts.pt_BR
-    # KDE
-    kdePackages.kscreen
-    kdePackages.partitionmanager
-    kdePackages.filelight
-    kdePackages.kcalc
-    kdePackages.kcharselect # Tool to select and copy special characters from all installed fonts
-    kdePackages.kcolorchooser # A small utility to select a color
-    kdePackages.kolourpaint # Easy-to-use paint program
-    kdePackages.ksystemlog # KDE SystemLog Application
-    kdePackages.sddm-kcm
-    kdiff3
-    kdePackages.isoimagewriter
-    hardinfo2 # System information and benchmarks for Linux systems
-    haruna
     wayland-utils
     wl-clipboard
     libva-utils
     vulkan-tools
     powertop
-    inputs.zen-browser.packages.${pkgs.system}.default
     # Provide libpipewire for Qt multimedia
     pkgs.pipewire
     # Audio
-    pavucontrol # PulseAudio Volume Control
-    pamixer # Command-line mixer for PulseAudio
     bluez # Bluetooth support
     bluez-tools # Bluetooth tools
   ];
-
-  # Ensure the PowerShell profile in this repository is installed for the user
-  system.activationScripts.powershell-profile.text = ''
-    profileDir="/home/mariogk/.config/powershell"
-    install -Dm644 ${../files/powershell/profile.ps1} "$profileDir/Microsoft.PowerShell_profile.ps1"
-    chown mariogk "$profileDir/Microsoft.PowerShell_profile.ps1"
-  '';
-
-  # Install Terminal-Icons module for PowerShell if missing
-  system.activationScripts.terminal-icons-install.text = ''
-    runuser -l mariogk -c 'pwsh -NoProfile -NonInteractive -Command "if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) { Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser -Force }"'
-  '';
 
   home-manager = {
     useGlobalPkgs = true;
