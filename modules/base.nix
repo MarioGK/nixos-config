@@ -141,18 +141,23 @@
 
   # Packages installed in system profile
   environment.systemPackages = with pkgs; [
-    # Tools
+    pkgs.nano
+    pkgs.wget
+    pkgs.git
+    pkgs.htop
+    pkgs.btop
     pkgs.powershell
     wayland-utils
     wl-clipboard
     libva-utils
     vulkan-tools
-    powertop
-    # Provide libpipewire for Qt multimedia
-    pkgs.pipewire
+    pkgs.zoxide
     # Audio
-    bluez # Bluetooth support
-    bluez-tools # Bluetooth tools
+    pkgs.pipewire
+    bluez
+    bluez-tools
+    pkgs.pavucontrol
+    pkgs.pamixer
   ];
 
   home-manager = {

@@ -51,6 +51,7 @@
     intel-gpu-tools
     sof-firmware
     alsa-ucm-conf
+    nvtopPackages.intel
   ];
 
   hardware.firmware = [

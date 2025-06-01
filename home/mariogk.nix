@@ -17,14 +17,8 @@
 
   home.packages = [
     pkgs.kdePackages.kate
-    pkgs.thunderbird # thunderbird is already in pkgs
-    pkgs.nano # nano is already in pkgs
-    pkgs.wget # wget is already in pkgs
-    pkgs.git # git is already in pkgs
-    pkgs.htop # htop is already in pkgs
-    pkgs.btop # btop is already in pkgs
+    pkgs.thunderbird
     pkgs.youtube-music
-    pkgs.zoxide
     pkgs.oh-my-posh
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.vorta
@@ -44,13 +38,9 @@
     pkgs.kdePackages.kolourpaint
     pkgs.kdePackages.ksystemlog
     pkgs.kdePackages.sddm-kcm
-    pkgs.kdiff3 # kdiff3 is already in pkgs
     pkgs.kdePackages.isoimagewriter
-    pkgs.hardinfo2 # hardinfo2 is already in pkgs
-    pkgs.haruna # haruna is already in pkgs
+    pkgs.haruna
     inputs.zen-browser.packages.${pkgs.system}.default
-    pkgs.pavucontrol # pavucontrol is already in pkgs
-    pkgs.pamixer # pamixer is already in pkgs
   ];
 
   programs.plasma = {
@@ -61,11 +51,11 @@
   };
 
   home.activation = {
-    powershell-profile = config.lib.dag.entryAfter ["writeBoundary"] ''
+    powershell-profile = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.coreutils}/bin/mkdir -p "$HOME/.config/powershell"
-      ${pkgs.coreutils}/bin/install -Dm644 ../../files/powershell/profile.ps1 "$HOME/.config/powershell/Microsoft.PowerShell_profile.ps1"
+      ${pkgs.coreutils}/bin/install -Dm644 ../../files/powershell/profile.ps1 $PROFILE
     '';
-    terminal-icons-install = config.lib.dag.entryAfter ["writeBoundary"] ''
+    terminal-icons-install = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.powershell}/bin/pwsh -NoProfile -NonInteractive -Command "if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) { Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser -Force }"
     '';
   };
