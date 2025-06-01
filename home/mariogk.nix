@@ -7,15 +7,21 @@
 {
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
+    ./vscode-insiders.nix # Import the new file
   ];
 
   home.username = "mariogk";
   home.homeDirectory = "/home/mariogk";
-  # Set the version of Home Manager used for this user's configuration.
-  # This value should not be changed once initially set.
   home.stateVersion = "24.05";
 
   programs.home-manager.enable = true;
+
+  # The nixpkgs.overlays definition for vscode-insiders is now in vscode-insiders.nix
+  # and will be merged via the import.
+
+  home.packages = [
+    pkgs.vscode-insiders # This will pick up the overlaid package via the imported module
+  ];
 
   programs.plasma = {
     enable = true;
