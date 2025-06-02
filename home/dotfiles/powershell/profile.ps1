@@ -152,10 +152,6 @@ Set-Alias -Name dnsln -Value New-DotnetSolution
 Set-Alias USER $env:USER
 Set-Alias HOME $env:HOME
 
-# Add Bun global apps to PATH
-$env:PATH += ";$HOME/.bun/bin"
-#endregion
-
 #region Zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 #endregion
