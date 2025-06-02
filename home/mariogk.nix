@@ -70,13 +70,18 @@ in
   # So, we will remove the programs.bash block.
 
   home = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
+
     file = {
       "hello.txt" = {
         text = "Hello World";
       };
 
       ".config/powershell/Microsoft.PowerShell_profile.ps1" = {
-        source = ./dotfiles/powershell/propfile.ps1;
+        source = ./dotfiles/powershell/profile.ps1;
+        force = true;
       };
     };
   };
