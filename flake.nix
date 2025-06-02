@@ -12,6 +12,7 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     vscode-insiders.url = "github:iosmanthus/code-insiders-flake";
     vscode-insiders.inputs.nixpkgs.follows = "nixpkgs";
+    #nix-jetbrains-plugins.url = "github:theCapypara/nix-jetbrains-plugins";
   };
 
   outputs =

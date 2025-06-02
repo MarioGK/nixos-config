@@ -1,17 +1,16 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }:
 {
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
 
-  nixpkgs.overlays = [
-    inputs.vscode-insiders.overlays.default
-  ];
+  #overlays = [
+  #  inputs.vscode-insiders.overlays.default
+  #];
 
   home.username = "mariogk";
   home.homeDirectory = "/home/mariogk";
@@ -21,14 +20,24 @@
 
   home.packages = [
     pkgs.kdePackages.kate
-    # VSCode Insiders is now managed by the vscode-insiders.nix module
+    pkgs.kdePackages.konsole
     pkgs.thunderbird
     pkgs.youtube-music
     pkgs.oh-my-posh
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.vorta
     pkgs.bun
-    pkgs.jetbrains.rider # Assuming jetbrains.rider is available like this
+    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rider
+      [
+        "github-copilot"
+        #"nix-idea"
+        #"Key Promoter X"
+        #"some.awesome"
+        #"lermitage.ij.all.pack"
+        #"zielu.gittoolbox"
+        #"AceJump"
+      ]
+    )
     pkgs.legcord
     pkgs.hunspell
     pkgs.hunspellDicts.en_US
@@ -47,10 +56,67 @@
     inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
+
+
   programs.plasma = {
     enable = true;
+    overrideConfig = true;
     workspace = {
+      clickItemTo = "open";
       lookAndFeel = "org.kde.breezedark.desktop";
+    };
+
+    panels = [
+      # Windows-like panel at the bottom
+      {
+        location = "bottom";
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.icontasks"
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
+        ];
+      }
+      # Global menu at the top
+      {
+        location = "top";
+        height = 26;
+        widgets = [ "org.kde.plasma.appmenu" ];
+      }
+    ];
+
+    hotkeys.commands."launch-konsole" = {
+      name = "Launch Konsole";
+      key = "Meta+Alt+K";
+      command = "konsole";
+    };
+
+    shortcuts = {
+      ksmserver = {
+        "Lock Session" = [
+          "Screensaver"
+          "Meta+Ctrl+Alt+L"
+        ];
+      };
+
+      kwin = {
+        "Expose" = "Meta+,";
+        "Switch Window Down" = "Meta+J";
+        "Switch Window Left" = "Meta+H";
+        "Switch Window Right" = "Meta+L";
+        "Switch Window Up" = "Meta+K";
+      };
+    };
+
+    configFile = {
+      #"baloofilerc"."Basic Settings"."Indexing-Enabled" = false;
+      #"kwinrc"."org.kde.kdecoration2"."ButtonsOnLeft" = "SF";
+      "kwinrc"."Desktops"."Number" = {
+        value = 3;
+        # Forces kde to not change this value (even through the settings app).
+        immutable = true;
+      };
     };
   };
 
