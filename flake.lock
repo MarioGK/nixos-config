@@ -81,11 +81,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742765550,
-        "narHash": "sha256-2vVIh2JrL6GAGfgCeY9e6iNKrBjs0Hw3bGQEAbwVs68=",
+        "lastModified": 1748196248,
+        "narHash": "sha256-1iHjsH6/5UOerJEoZKE+Gx1BgAoge/YcnUsOA4wQ/BU=",
         "owner": "nix-community",
         "repo": "plasma-manager",
-        "rev": "b70be387276e632fe51232887f9e04e2b6ef8c16",
+        "rev": "b7697abe89967839b273a863a3805345ea54ab56",
         "type": "github"
       },
       "original": {
@@ -100,7 +100,28 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
+        "vscode-insiders": "vscode-insiders",
         "zen-browser": "zen-browser"
+      }
+    },
+    "vscode-insiders": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748650579,
+        "narHash": "sha256-hwtgLqaZWQPOf1+66QDvAkGOIav6hF8Zzzg0GN90CZQ=",
+        "owner": "iosmanthus",
+        "repo": "code-insiders-flake",
+        "rev": "f3fa0c8eec32997fd5370b0ed32892ff248bb501",
+        "type": "github"
+      },
+      "original": {
+        "owner": "iosmanthus",
+        "repo": "code-insiders-flake",
+        "type": "github"
       }
     },
     "zen-browser": {

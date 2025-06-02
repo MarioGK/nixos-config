@@ -3,13 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     zen-browser.url = "github:youwen5/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    vscode-insiders.url = "github:iosmanthus/code-insiders-flake";
+    vscode-insiders.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -20,6 +22,7 @@
       home-manager,
       plasma-manager,
       nixos-hardware,
+      vscode-insiders,
     }:
     let
       system = "x86_64-linux";

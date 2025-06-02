@@ -4,13 +4,13 @@
   inputs,
   ...
 }:
-let
-  powershell = import ./powershell.nix;
-in
 {
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
-    ./modules/vscode-insiders.nix
+  ];
+
+  nixpkgs.overlays = [
+    inputs.vscode-insiders.overlays.default
   ];
 
   home.username = "mariogk";
@@ -53,21 +53,6 @@ in
       lookAndFeel = "org.kde.breezedark.desktop";
     };
   };
-
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
-
-  # Bash alias for code-insiders is now managed by the vscode-insiders.nix module
-  # If programs.bash had other settings, they would remain here.
-  # Since it only had the alias and enable = true (which the module also sets if needed),
-  # the entire programs.bash block can be removed if no other bash settings exist.
-  # For now, let's assume it might be used by something else or could be added to later,
-  # so we'll only comment out or ensure it's not re-adding the alias.
-  # Re-evaluating: The module sets programs.bash.enable = true and the specific alias.
-  # If home/mariogk.nix had other bash aliases or settings, they should remain.
-  # If not, the block can be removed. The current file only has this alias.
-  # So, we will remove the programs.bash block.
 
   home = {
     sessionVariables = {
