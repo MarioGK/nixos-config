@@ -1,9 +1,22 @@
 { config, pkgs, ... }:
+let
+  # Determine if we should enable TLP: only when the machine-level
+  # `powerManagement.enable` is set (e.g. on the laptop host).
+  tlpEnabled = if (config ? powerManagement) && (config.powerManagement ? enable)
+    then config.powerManagement.enable
+    else false;
+in
 {
-  # Disable power-profiles-daemon as it conflicts with TLP
-  services.power-profiles-daemon.enable = false;
+  # Disable power-profiles-daemon as it conflicts with TLP, but only when
+  # TLP is actually enabled. If TLP is disabled leave the existing
+  # `services.power-profiles-daemon.enable` value alone (or false if unset).
+  services.power-profiles-daemon.enable = if tlpEnabled then false
+    else (if (config.services ? power-profiles-daemon) && (config.services.power-profiles-daemon ? enable)
+      then config.services.power-profiles-daemon.enable
+      else false);
+
   services.tlp = {
-    enable = true;
+    enable = tlpEnabled;
     settings = {
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";

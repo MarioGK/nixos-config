@@ -5,6 +5,7 @@ This repository contains NixOS configuration using flakes. The hosts are organiz
 ## Hardware Summary
 - **Laptop**: Lenovo Yoga Aura Edition (Slim 7 14ILL10) with a Lunar Lake CPU.
 - **Desktop**: AMD Ryzen 7 5800X CPU paired with an AMD Radeon 7700XT GPU.
+- **Laptop PlanA**: Lenovo ThinkPad E14 Gen 6 Ryze 7 7735HS and Radeon 680M iGPU.
 
 These machines use the configurations in `hosts/laptop` and `hosts/desktop` respectively.
 
