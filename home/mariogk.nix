@@ -118,6 +118,7 @@
         # Forces kde to not change this value (even through the settings app).
         immutable = true;
       };
+      "kwinrc"."Windows"."BorderlessMaximizedWindows" = true;
     };
   };
 
