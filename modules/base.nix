@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  hostname,
   ...
 }:
 {
@@ -10,6 +11,7 @@
     ./dotnet.nix
   ];
 
+  # Boot configuration
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "mitigations=off" ];
@@ -19,17 +21,15 @@
     };
   };
 
+  # Nix configuration
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  # Enable networking
+  # Networking
   networking = {
-    # Use the iNet Wireless Daemon instead of wpa_supplicant
     wireless.iwd.enable = true;
-
-    # Enable NetworkManager and configure it to use iwd
     networkmanager = {
       enable = true;
       insertNameservers = [
@@ -40,10 +40,8 @@
     };
   };
 
-  # Set your time zone
+  # Locale and timezone
   time.timeZone = "America/Sao_Paulo";
-
-  # Internationalisation properties
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pt_PT.UTF-8";
@@ -57,24 +55,23 @@
     LC_TIME = "pt_PT.UTF-8";
   };
 
-  # Disable the X11 windowing system; Wayland will be used instead.
+  # Wayland-only configuration
   services.xserver.enable = false;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
   services.desktopManager.plasma6.enable = true;
   programs.dconf.enable = true;
 
+  # Exclude unnecessary KDE packages
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     oxygen
   ];
 
-  # Audio settings
-  # Include redistributable firmware like audio codecs
+  # Audio configuration
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-
   hardware.enableRedistributableFirmware = true;
   services.pipewire = {
     enable = true;
@@ -85,12 +82,10 @@
     wireplumber.enable = true;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    #powerOnBoot = true;
-  };
+  # Bluetooth
+  hardware.bluetooth.enable = true;
 
-  # User account
+  # User configuration
   users.users.mariogk = {
     isNormalUser = true;
     description = "Mario Gabriell Karaziaki";
@@ -98,12 +93,10 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-    ];
     shell = pkgs.powershell;
   };
 
-  # Grant user mariogk privileged actions without authentication via polkit
+  # Security configuration
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if (subject.user == "mariogk") {
@@ -112,7 +105,6 @@
     });
   '';
 
-  # Allow user mariogk to use sudo without password prompts
   security.sudo.extraRules = [
     {
       users = [ "mariogk" ];
@@ -125,48 +117,38 @@
     }
   ];
 
-  # Automatic login
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "mariogk";
+  # Auto-login
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "mariogk";
+  };
 
-  # Set PowerShell as the default shell for all users
+  # Shell configuration
   users.defaultUserShell = pkgs.powershell;
   environment.shells = with pkgs; [ powershell ];
 
-  # Install firefox
+  # Essential programs
   programs.firefox.enable = true;
-
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Packages installed in system profile
+  # Base system packages
   environment.systemPackages = with pkgs; [
-    pkgs.nano
-    pkgs.wget
-    pkgs.git
-    pkgs.htop
-    pkgs.btop
-    pkgs.powershell
-    wayland-utils
-    wl-clipboard
-    libva-utils
-    vulkan-tools
-    pkgs.zoxide
-    pkgs.nixfmt-rfc-style
-    # Audio
-    pkgs.pipewire
+    powershell
+    pipewire
     bluez
     bluez-tools
-    pkgs.pavucontrol
-    pkgs.pamixer
+    wl-clipboard
   ];
 
+  # Home manager configuration
   home-manager = {
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { 
+      inherit inputs;
+      inherit hostname;
+    };
     users.mariogk = import ../home/mariogk.nix;
   };
 
-  # Default system state version
   system.stateVersion = "25.05";
 }

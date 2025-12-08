@@ -1,17 +1,10 @@
 { config, pkgs, ... }:
+
 {
   imports = [
-    ../../modules/base.nix
-    ../../hardware/desktop.nix
-    ../../modules/update-on-shutdown.nix
+    ../../profiles/desktop.nix
   ];
 
-  networking.hostName = "desktop";
-
-  # AMD specific tools for the desktop
-  environment.systemPackages = with pkgs; [
-    amdvlk
-    radeontop
-    lact
-  ];
+  # This file now only contains host-specific overrides
+  # Most configuration is handled by the profile system
 }

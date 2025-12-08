@@ -12,7 +12,6 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     vscode-insiders.url = "github:iosmanthus/code-insiders-flake";
     vscode-insiders.inputs.nixpkgs.follows = "nixpkgs";
-    #nix-jetbrains-plugins.url = "github:theCapypara/nix-jetbrains-plugins";
   };
 
   outputs =
@@ -27,27 +26,65 @@
     }:
     let
       system = "x86_64-linux";
-      mkHost =
-        hostPath:
+      
+      # Helper function to create host configurations
+      mkHost = { hostname, hardware-modules, profile-modules ? [] }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ hostPath ];
-          specialArgs = { inherit inputs; };
+          modules = [
+            ./modules/base.nix
+            ./modules/profiles.nix
+          ] ++ hardware-modules ++ profile-modules ++ [
+            {
+              networking.hostName = hostname;
+              _module.args = { inherit inputs; };
+            }
+          ];
+          specialArgs = { 
+            inherit inputs;
+            inherit hostname;
+          };
         };
 
-      laptop = mkHost ./hosts/laptop;
-      desktop = mkHost ./hosts/desktop;
+      # Hardware configurations
+      laptopHardware = [
+        ./hardware/laptop.nix
+        ./modules/tlp.nix
+        ./modules/update-on-shutdown.nix
+        inputs.nixos-hardware.nixosModules.lenovo-yoga-7-14ILL10
+      ];
+
+      desktopHardware = [
+        ./hardware/desktop.nix
+        ./modules/update-on-shutdown.nix
+      ];
+
+      # Software profiles
+      laptopProfile = ./profiles/laptop.nix;
+      desktopProfile = ./profiles/desktop.nix;
+
+      # Host configurations
+      laptop = mkHost {
+        hostname = "mario-laptop";
+        hardware-modules = laptopHardware;
+        profile-modules = [ laptopProfile ];
+      };
+
+      desktop = mkHost {
+        hostname = "desktop";
+        hardware-modules = desktopHardware;
+        profile-modules = [ desktopProfile ];
+      };
+
     in
     {
       nixosConfigurations = {
         laptop = laptop;
         desktop = desktop;
-        # Alias for laptop so that `nixos-rebuild switch` works on host
-        # `mario-laptop` without explicitly specifying the flake output
+        # Host aliases
         mario-laptop = laptop;
         mario-desktop = desktop;
-        # Provide a default configuration under the name 'nixos'
-        # so that plain `nixos-rebuild switch` works out of the box.
+        # Default configuration
         nixos = laptop;
       };
     };
