@@ -35,4 +35,19 @@
     EnableHDR=true
     MaxFPS=144
   '';
+
+  # Desktop-specific Flatpak packages
+  system.activationScripts.desktop-flatpak.text = ''
+    ${pkgs.flatpak}/bin/flatpak install --noninteractive flathub net.mkiol.SpeechNote.Addon.amd
+  '';
+
+  # Ensure desktop flatpak script runs after base setup
+  systemd.services.desktop-flatpak = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "flatpak-setup.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.flatpak}/bin/flatpak install --noninteractive flathub net.mkiol.SpeechNote.Addon.amd'";
+    };
+  };
 }

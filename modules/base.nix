@@ -138,7 +138,39 @@
     bluez
     bluez-tools
     wl-clipboard
+    obsidian
+    popsicle
+    legcord
+    podman
+    podman-compose
+    podman-desktop
   ];
+
+  # Podman configuration
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
+  # Flatpak configuration
+  services.flatpak.enable = true;
+  
+  system.activationScripts.flatpak-setup.text = ''
+    ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    ${pkgs.flatpak}/bin/flatpak install --noninteractive flathub com.github.wwmm.easyeffects
+    ${pkgs.flatpak}/bin/flatpak install --noninteractive flathub net.mkiol.SpeechNote
+  '';
+
+  # Convert activation script to systemd service for better dependency management
+  systemd.services.flatpak-setup = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && ${pkgs.flatpak}/bin/flatpak install --noninteractive flathub com.github.wwmm.easyeffects && ${pkgs.flatpak}/bin/flatpak install --noninteractive flathub net.mkiol.SpeechNote'";
+    };
+  };
 
   # Home manager configuration
   home-manager = {
