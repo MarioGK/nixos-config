@@ -28,4 +28,11 @@
       amdvlk
     ];
   };
+
+  # KWin HDR configuration for desktop
+  environment.etc."xdg/kwinrc".text = ''
+    [Compositing]
+    EnableHDR=true
+    MaxFPS=144
+  '';
 }
