@@ -10,14 +10,12 @@ let
     with pkgs.dotnetCorePackages;
     combinePackages [
       dotnet_10.sdk
-      dotnet_9.sdk
     ]
   );
   aspnetCombined = (
     with pkgs.dotnetCorePackages;
     combinePackages [
-      aspnetcore_10_0-bin
-      aspnetcore_9_0
+      aspnetcore_10_0
     ]
   );
 in
