@@ -13,9 +13,8 @@
   # VirtIO drivers
   boot.initrd.kernelModules = [ "virtio_gpu" ];
 
-  # Blacklist vsock modules unless VSOCK device is configured in hypervisor
-  # Prevents "Failed to query local AF_VSOCK CID" errors
-  boot.blacklistedKernelModules = [ "vsock" "vmw_vsock_virtio_transport" "vmw_vsock_vmci_transport" ];
+  # Disable systemd-ssh-generator VSOCK auto-binding (unless VSOCK device configured)
+  boot.kernelParams = [ "systemd.ssh_auto=no" ];
 
   # Basic graphics
   hardware.graphics = {

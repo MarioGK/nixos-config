@@ -13,11 +13,11 @@
   ];
 
   # Console for Proxmox serial access
-  boot.kernelParams = [ "console=ttyS0,115200" ];
-
-  # Blacklist vsock modules - Proxmox doesn't provide VSOCK device
-  # Prevents "Failed to query local AF_VSOCK CID" errors
-  boot.blacklistedKernelModules = [ "vsock" "vmw_vsock_virtio_transport" "vmw_vsock_vmci_transport" ];
+  # Disable systemd-ssh-generator VSOCK auto-binding (Proxmox doesn't provide VSOCK)
+  boot.kernelParams = [
+    "console=ttyS0,115200"
+    "systemd.ssh_auto=no"
+  ];
 
   # No power management needed in VM
   services.tlp.enable = lib.mkForce false;
