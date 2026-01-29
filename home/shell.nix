@@ -27,6 +27,49 @@
         end
         SOPS_AGE_KEY="$key" sops $argv
       end
+
+      # Trust .NET dev certificates for browsers
+      function dotnet-trust-cert
+        set -l cert_dir "$HOME/.aspnet/https"
+        set -l cert_file "$cert_dir/aspnetcore-dev.crt"
+
+        # Generate and export the dev certificate
+        echo "Generating .NET dev certificate..."
+        dotnet dev-certs https --clean 2>/dev/null
+        dotnet dev-certs https --trust 2>/dev/null
+        mkdir -p "$cert_dir"
+        dotnet dev-certs https --format PEM -ep "$cert_file" --no-password
+
+        if not test -f "$cert_file"
+          echo "Error: Failed to export certificate"
+          return 1
+        end
+
+        echo "Certificate exported to $cert_file"
+
+        # Trust for Chrome/Chromium-based browsers (Helium)
+        echo "Adding to Chrome/Chromium trust store..."
+        mkdir -p "$HOME/.pki/nssdb"
+        certutil -d sql:"$HOME/.pki/nssdb" -D -n "ASP.NET Core Dev" 2>/dev/null
+        certutil -d sql:"$HOME/.pki/nssdb" -A -t "CP,," -n "ASP.NET Core Dev" -i "$cert_file"
+
+        # Trust for Firefox-based browsers (Zen)
+        echo "Adding to Firefox trust stores..."
+        for profile_dir in $HOME/.zen/*/. $HOME/.mozilla/firefox/*/.
+          if test -d "$profile_dir"
+            set -l profile (dirname "$profile_dir")
+            if test -f "$profile/cert9.db"
+              echo "  Adding to: $profile"
+              certutil -d sql:"$profile" -D -n "ASP.NET Core Dev" 2>/dev/null
+              certutil -d sql:"$profile" -A -t "CP,," -n "ASP.NET Core Dev" -i "$cert_file"
+            end
+          end
+        end
+
+        echo ""
+        echo "Done! Restart your browsers for changes to take effect."
+        echo "Certificate location: $cert_file"
+      end
     '';
 
     shellAliases = {
@@ -53,6 +96,9 @@
       # System
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos";
       update = "sudo nix flake update --flake /etc/nixos";
+      reboot = "systemctl reboot";
+      shutdown = "systemctl poweroff";
+      poweroff = "systemctl poweroff";
 
       # Containers
       docker = "podman";

@@ -59,4 +59,10 @@
     EDITOR = "code --wait";
     VISUAL = "code --wait";
   };
+
+  # User packages
+  home.packages = with pkgs; [
+    # Certificate management (for dotnet dev-certs trust)
+    nssTools  # Provides certutil for browser certificate trust
+  ];
 }
