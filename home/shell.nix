@@ -59,18 +59,6 @@
       docker-compose = "podman-compose";
     };
 
-    plugins = [
-      # Fish plugin for better git integration
-      {
-        name = "fish-git-abbr";
-        src = pkgs.fetchFromGitHub {
-          owner = "lewisacidic";
-          repo = "fish-git-abbr";
-          rev = "v0.3.4";
-          sha256 = "sha256-rQgnlHbEA0WXeqZf2/FNf5ofr2FTKF7VUZuuILY2C4k=";
-        };
-      }
-    ];
   };
 
   # Starship prompt
