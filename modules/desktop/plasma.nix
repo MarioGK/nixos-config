@@ -49,6 +49,7 @@
     kdePackages.spectacle     # Screenshots
     kdePackages.gwenview      # Image viewer
     kdePackages.okular        # Document viewer
+    kdePackages.haruna        # Video player
     kdePackages.filelight     # Disk usage
     kdePackages.partitionmanager  # Disk partitions
     kdePackages.kdeconnect-kde    # Phone integration
@@ -67,6 +68,9 @@
 
     # Desktop applications
     bitwarden  # Password manager
+    btop       # System monitor
+    popsicle   # USB flasher
+    etcher     # USB flasher (balenaEtcher)
   ];
 
   # D-Bus for KDE Connect
