@@ -3,7 +3,8 @@
 let
   # .NET with workload support workaround
   dotnet-combined = (with pkgs.dotnetCorePackages; combinePackages [
-    sdk_9_0
+    sdk_10_0
+    aspnetcore_10_0
   ]).overrideAttrs (finalAttrs: previousAttrs: {
     postBuild = (previousAttrs.postBuild or "") + ''
       for i in $out/sdk/*; do
@@ -24,6 +25,7 @@ in
     git
     gh  # GitHub CLI
     lazygit
+    gitui
 
     # .NET
     dotnet-combined
@@ -33,11 +35,12 @@ in
     python3Packages.pip
     pipx
 
-    # Node.js
+    # Node.js / JavaScript
     nodejs_22
     nodePackages.npm
     nodePackages.pnpm
     yarn
+    bun
 
     # Go
     go
@@ -64,6 +67,18 @@ in
     httpie
     curl
     wget
+
+    # System utilities
+    ncdu       # Disk usage analyzer
+    gping      # Ping with graph
+    duf        # Better df
+    dust       # Better du
+
+    # Container tools
+    lazydocker  # Docker/Podman TUI
+
+    # API development
+    bruno  # API client
 
     # Debugging
     gdb

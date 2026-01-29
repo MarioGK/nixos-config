@@ -21,4 +21,5 @@
   # flatpak install flathub com.github.wwmm.easyeffects
   # flatpak install flathub io.missioncenter.MissionCenter
   # flatpak install flathub net.mkiol.SpeechNote
+  # flatpak install flathub io.kinvolk.Headlamp  # Kubernetes GUI
 }

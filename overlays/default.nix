@@ -6,7 +6,7 @@
 
   # Custom overlays
   (final: prev: {
-    # Add custom package modifications here
-    # example = prev.example.override { ... };
+    # Helium Browser from flake
+    helium-browser = inputs.helium-browser.packages.${prev.system}.default;
   })
 ]

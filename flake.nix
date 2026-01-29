@@ -24,9 +24,14 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    helium-browser = {
+      url = "github:amaanq/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, sops-nix, zen-browser, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, sops-nix, zen-browser, helium-browser, ... }@inputs:
     let
       lib = import ./lib { inherit inputs; };
     in
@@ -35,6 +40,26 @@
         mariogk-notebook = lib.mkHost {
           hostname = "mariogk-notebook";
           system = "x86_64-linux";
+          hardwareModules = [ ./modules/hardware/intel-lunar-lake.nix ];
+        };
+
+        mariogk-desktop = lib.mkHost {
+          hostname = "mariogk-desktop";
+          system = "x86_64-linux";
+          hardwareModules = [ ./modules/hardware/amd-desktop.nix ];
+          profiles = [ ./modules/profiles/gaming.nix ];
+        };
+
+        plana-notebook = lib.mkHost {
+          hostname = "plana-notebook";
+          system = "x86_64-linux";
+          hardwareModules = [ ./modules/hardware/amd-laptop.nix ];
+        };
+
+        mariogk-vm = lib.mkHostHeadless {
+          hostname = "mariogk-vm";
+          system = "x86_64-linux";
+          hardwareModules = [ ./modules/hardware/proxmox-vm.nix ];
         };
       };
     };

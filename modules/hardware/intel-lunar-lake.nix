@@ -4,6 +4,9 @@
   # Intel microcode updates
   hardware.cpu.intel.updateMicrocode = true;
 
+  # Intel IOMMU kernel parameters
+  boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+
   # Intel GPU configuration (Arc Graphics 130V/140V)
   hardware.graphics = {
     enable = true;

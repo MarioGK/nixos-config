@@ -18,12 +18,10 @@
     # Required for TPM2 auto-unlock
     initrd.systemd.enable = true;
 
-    # Kernel parameters for Lunar Lake
+    # Common kernel parameters
     kernelParams = [
       "quiet"
       "splash"
-      "intel_iommu=on"
-      "iommu=pt"
     ];
 
     # Plymouth boot splash

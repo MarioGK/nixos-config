@@ -44,5 +44,8 @@
     git  # Required for flakes
     nix-output-monitor  # Better build output
     nvd  # Nix version diff
+    comma  # Run any package without installing
+    manix  # Search Nix documentation
+    nixpkgs-fmt  # Nix code formatter
   ];
 }

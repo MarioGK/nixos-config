@@ -4,14 +4,19 @@
   # KDE Plasma 6
   services.desktopManager.plasma6.enable = true;
 
-  # SDDM display manager with Wayland
-  services.displayManager = {
-    sddm = {
-      enable = true;
-      wayland.enable = true;
+  # Greetd with tuigreet (replaces SDDM)
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
+        user = "greeter";
+      };
     };
-    defaultSession = "plasma";
   };
+
+  # Disable SDDM
+  services.displayManager.sddm.enable = false;
 
   # XDG portal for Wayland
   xdg.portal = {
@@ -59,6 +64,9 @@
     # Wayland utilities
     wl-clipboard
     xwaylandvideobridge  # For screen sharing
+
+    # Desktop applications
+    bitwarden  # Password manager
   ];
 
   # D-Bus for KDE Connect

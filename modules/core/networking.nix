@@ -33,8 +33,6 @@
         22000  # Syncthing transfer
         21027  # Syncthing discovery
       ];
-      # Tailscale interface is trusted
-      trustedInterfaces = [ "tailscale0" ];
     };
 
     # Disable wpa_supplicant (using iwd instead)
