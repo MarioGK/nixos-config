@@ -31,25 +31,25 @@
       # NixOS rebuild with automatic hostname detection
       function rebuild
         set -l config_dir "/etc/nixos-config"
-        set -l hostname (hostname)
+        set -l host (cat /etc/hostname)
 
         echo "Pulling latest changes..."
         git -C "$config_dir" pull
 
-        echo "Rebuilding NixOS for $hostname..."
-        sudo nixos-rebuild switch --flake "$config_dir#$hostname"
+        echo "Rebuilding NixOS for $host..."
+        sudo nixos-rebuild switch --flake "$config_dir#$host"
       end
 
       # NixOS rebuild boot (applies on next reboot)
       function rebuild-boot
         set -l config_dir "/etc/nixos-config"
-        set -l hostname (hostname)
+        set -l host (cat /etc/hostname)
 
         echo "Pulling latest changes..."
         git -C "$config_dir" pull
 
-        echo "Building NixOS for $hostname (will apply on next boot)..."
-        sudo nixos-rebuild boot --flake "$config_dir#$hostname"
+        echo "Building NixOS for $host (will apply on next boot)..."
+        sudo nixos-rebuild boot --flake "$config_dir#$host"
       end
 
       # Update flake inputs
