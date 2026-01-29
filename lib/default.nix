@@ -110,4 +110,62 @@ in
         }
       ] ++ hardwareModules ++ profiles ++ extraModules;
     };
+
+  # ISO builder for live environment
+  mkISO = { system ? "x86_64-linux", extraModules ? [] }:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+
+      specialArgs = {
+        inherit inputs;
+        hostname = "nixos-live";
+      };
+
+      modules = [
+        # Base ISO module with Plasma 6
+        "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma6-new-kernel.nix"
+
+        # Core modules (no boot.nix - ISO handles bootloader)
+        ../modules/core/networking.nix
+        ../modules/core/nix.nix
+
+        # Desktop modules
+        ../modules/desktop/plasma.nix
+        ../modules/desktop/fonts.nix
+
+        # Hardware (generic)
+        ../modules/hardware/audio.nix
+        ../modules/hardware/bluetooth.nix
+
+        # Programs
+        ../modules/programs/containers.nix
+        ../modules/programs/development.nix
+
+        # Services (subset appropriate for live)
+        ../modules/services/flatpak.nix
+        ../modules/services/ssh.nix
+
+        # Home Manager for nixos user
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit inputs; };
+            users.nixos = import ../home/iso.nix;
+          };
+        }
+
+        # sops-nix (system level)
+        inputs.sops-nix.nixosModules.sops
+
+        # Overlays
+        {
+          nixpkgs.overlays = import ../overlays { inherit inputs; };
+        }
+
+        # ISO-specific configuration
+        ../iso/configuration.nix
+      ] ++ extraModules;
+    };
 }

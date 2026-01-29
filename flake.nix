@@ -72,6 +72,9 @@
           system = "x86_64-linux";
           hardwareModules = [ ./modules/hardware/qemu-vm.nix ];
         };
+
+        # Live ISO for installation and recovery
+        live = lib.mkISO {};
       };
     };
 }

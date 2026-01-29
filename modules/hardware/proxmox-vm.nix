@@ -12,9 +12,10 @@
     "ahci" "sd_mod" "sr_mod"
   ];
 
-  # Console for Proxmox serial access
+  # Console configuration: both VGA (tty1) and serial for Proxmox
   # Disable systemd-ssh-generator VSOCK auto-binding (Proxmox doesn't provide VSOCK)
   boot.kernelParams = [
+    "console=tty1"
     "console=ttyS0,115200"
     "systemd.ssh_auto=no"
   ];
