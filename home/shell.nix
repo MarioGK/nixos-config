@@ -28,6 +28,37 @@
         SOPS_AGE_KEY="$key" sops $argv
       end
 
+      # NixOS rebuild with automatic hostname detection
+      function rebuild
+        set -l config_dir "/etc/nixos-config"
+        set -l hostname (hostname)
+
+        echo "Pulling latest changes..."
+        git -C "$config_dir" pull
+
+        echo "Rebuilding NixOS for $hostname..."
+        sudo nixos-rebuild switch --flake "$config_dir#$hostname"
+      end
+
+      # NixOS rebuild boot (applies on next reboot)
+      function rebuild-boot
+        set -l config_dir "/etc/nixos-config"
+        set -l hostname (hostname)
+
+        echo "Pulling latest changes..."
+        git -C "$config_dir" pull
+
+        echo "Building NixOS for $hostname (will apply on next boot)..."
+        sudo nixos-rebuild boot --flake "$config_dir#$hostname"
+      end
+
+      # Update flake inputs
+      function update
+        set -l config_dir "/etc/nixos-config"
+        echo "Updating flake inputs..."
+        sudo nix flake update --flake "$config_dir"
+      end
+
       # Trust .NET dev certificates for browsers
       function dotnet-trust-cert
         set -l cert_dir "$HOME/.aspnet/https"
@@ -94,8 +125,6 @@
       gl = "git pull";
 
       # System
-      rebuild = "sudo nixos-rebuild switch --flake /etc/nixos";
-      update = "sudo nix flake update --flake /etc/nixos";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
       poweroff = "systemctl poweroff";
