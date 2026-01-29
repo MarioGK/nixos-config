@@ -19,11 +19,5 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  # zram swap
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50;
-  };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

@@ -35,6 +35,7 @@ in
         ../modules/services/syncthing.nix
         ../modules/services/flatpak.nix
         ../modules/services/update-on-shutdown.nix
+        ../modules/services/ssh.nix
 
         # Programs
         ../modules/programs/containers.nix
@@ -83,6 +84,7 @@ in
         # Services (server-appropriate only)
         ../modules/services/syncthing.nix
         ../modules/services/update-on-shutdown.nix
+        ../modules/services/ssh.nix
 
         # Programs
         ../modules/programs/containers.nix

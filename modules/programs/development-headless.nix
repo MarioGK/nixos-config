@@ -56,6 +56,7 @@ in
 
     # AI tools
     claude-code
+    opencode
 
     # CLI utilities
     jq

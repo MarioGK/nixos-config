@@ -41,4 +41,11 @@
 
   # Allow unfree firmware
   hardware.enableRedistributableFirmware = true;
+
+  # zram swap (compressed in-memory swap)
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
 }

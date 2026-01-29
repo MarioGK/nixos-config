@@ -16,6 +16,17 @@
 
       # Better history search
       bind \cr history-pager
+
+      # SOPS with Bitwarden integration
+      function sops-edit
+        set -l key (rbw get "SOPS Age Key" 2>/dev/null)
+        if test -z "$key"
+          echo "Error: Could not fetch SOPS Age Key from Bitwarden"
+          echo "Make sure rbw is unlocked: rbw unlock"
+          return 1
+        end
+        SOPS_AGE_KEY="$key" sops $argv
+      end
     '';
 
     shellAliases = {

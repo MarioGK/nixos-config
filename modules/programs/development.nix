@@ -66,6 +66,7 @@ in
 
     # AI tools
     claude-code
+    opencode
 
     # CLI utilities
     jq
@@ -90,6 +91,11 @@ in
     gdb
     strace
     ltrace
+
+    # Secrets management
+    sops
+    age
+    ssh-to-age
   ];
 
   # .NET environment

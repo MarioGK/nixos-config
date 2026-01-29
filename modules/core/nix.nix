@@ -39,6 +39,30 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Locale settings
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME = "pt_BR.UTF-8";
+      LC_MONETARY = "pt_BR.UTF-8";
+      LC_NUMERIC = "pt_BR.UTF-8";
+      LC_MEASUREMENT = "pt_BR.UTF-8";
+      LC_PAPER = "pt_BR.UTF-8";
+    };
+  };
+
+  # Timezone
+  time.timeZone = "America/Sao_Paulo";
+
+  # Console keyboard
+  console.keyMap = "us";
+
+  # X11/Wayland keyboard
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
   # System packages for nix management
   environment.systemPackages = with pkgs; [
     git  # Required for flakes

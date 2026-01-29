@@ -35,12 +35,6 @@
   #   { device = "/dev/disk/by-uuid/REPLACE-WITH-SWAP-UUID"; }
   # ];
 
-  # Option 2: zram swap (recommended for 32GB RAM)
-  zramSwap = {
-    enable = true;
-    memoryPercent = 25;  # 8GB of compressed swap
-  };
-
   # Hardware detection
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.enableRedistributableFirmware = true;

@@ -74,12 +74,6 @@
   # Swap file alternative (recommended for LUKS)
   swapDevices = [ ];
 
-  # zram swap (in-memory compressed swap)
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50;
-  };
-
   # CPU and hardware detection
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -71,6 +71,11 @@
     btop       # System monitor
     popsicle   # USB flasher
     etcher     # USB flasher (balenaEtcher)
+
+    # Spellcheck dictionaries
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.pt_BR
   ];
 
   # D-Bus for KDE Connect

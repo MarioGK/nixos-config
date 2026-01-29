@@ -1,5 +1,12 @@
 { config, lib, pkgs, ... }:
 
+let
+  # Fetch JetBrains Rider icon
+  riderIcon = pkgs.fetchurl {
+    url = "https://resources.jetbrains.com/storage/products/rider/img/meta/rider.svg";
+    hash = "sha256-htmBgLVqHxBfUFkkRR+F+I5UZb1i/kRW0uDnwCRIiqU=";
+  };
+in
 {
   # Autostart Bitwarden minimized to tray
   xdg.configFile."autostart/bitwarden.desktop".text = ''
@@ -13,6 +20,47 @@
     Comment=Password Manager
     Categories=Utility;Security;
   '';
+
+  # JetBrains Rider icon
+  xdg.dataFile."icons/hicolor/scalable/apps/rider.svg".source = riderIcon;
+
+  # Custom MIME types for Visual Studio solution files
+  xdg.dataFile."mime/packages/rider-sln.xml".text = ''
+    <?xml version="1.0" encoding="UTF-8"?>
+    <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+      <mime-type type="application/x-sln">
+        <comment>Visual Studio Solution</comment>
+        <glob pattern="*.sln"/>
+        <icon name="rider"/>
+      </mime-type>
+      <mime-type type="application/x-slnx">
+        <comment>Visual Studio Solution (XML)</comment>
+        <glob pattern="*.slnx"/>
+        <icon name="rider"/>
+      </mime-type>
+    </mime-info>
+  '';
+
+  # JetBrains Rider desktop entry
+  xdg.desktopEntries.rider = {
+    name = "JetBrains Rider";
+    comment = ".NET IDE";
+    exec = "rider %f";
+    icon = "rider";
+    terminal = false;
+    type = "Application";
+    categories = [ "Development" "IDE" ];
+    mimeType = [ "application/x-sln" "application/x-slnx" ];
+  };
+
+  # MIME type associations
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/x-sln" = [ "rider.desktop" ];
+      "application/x-slnx" = [ "rider.desktop" ];
+    };
+  };
 
   home.packages = with pkgs; [
     # Browsers

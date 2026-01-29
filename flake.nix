@@ -29,9 +29,14 @@
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    opencode = {
+      url = "github:sst/opencode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, sops-nix, zen-browser, helium-browser, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, sops-nix, zen-browser, helium-browser, opencode, ... }@inputs:
     let
       lib = import ./lib { inherit inputs; };
     in
@@ -60,6 +65,12 @@
           hostname = "mariogk-vm";
           system = "x86_64-linux";
           hardwareModules = [ ./modules/hardware/proxmox-vm.nix ];
+        };
+
+        test-vm = lib.mkHost {
+          hostname = "test-vm";
+          system = "x86_64-linux";
+          hardwareModules = [ ./modules/hardware/qemu-vm.nix ];
         };
       };
     };
