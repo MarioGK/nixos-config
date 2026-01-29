@@ -39,4 +39,10 @@
 
   # Enable PAM for swaylock/kde unlock
   security.pam.services.login.enableGnomeKeyring = true;
+
+  # Give mariogk ownership of nixos-config directory
+  systemd.tmpfiles.rules = [
+    "d /etc/nixos-config 0755 mariogk users -"
+    "Z /etc/nixos-config - mariogk users -"
+  ];
 }
