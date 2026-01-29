@@ -1,30 +1,46 @@
 # Hardware configuration for QEMU/KVM virtual machine (graphical)
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, ... }:
 
 {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  flake.modules.nixos.hardware-qemu-vm = { config, lib, pkgs, modulesPath, ... }: {
+    imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  # QEMU guest agent for hypervisor integration (shutdown, freeze, etc.)
-  services.qemuGuest.enable = true;
+    # Default filesystem configuration for test VMs
+    # These are placeholders that work with qemu-vm.nix
+    fileSystems."/" = lib.mkDefault {
+      device = "/dev/vda1";
+      fsType = "ext4";
+    };
 
-  # QXL video driver for better VM performance
-  services.xserver.videoDrivers = [ "qxl" ];
+    # Bootloader configuration for VM
+    boot.loader.grub = lib.mkDefault {
+      enable = true;
+      device = "/dev/vda";
+    };
+    boot.loader.systemd-boot.enable = lib.mkForce false;
 
-  # VirtIO drivers
-  boot.initrd.kernelModules = [ "virtio_gpu" ];
+    # QEMU guest agent for hypervisor integration (shutdown, freeze, etc.)
+    services.qemuGuest.enable = true;
 
-  # Disable systemd-ssh-generator VSOCK auto-binding (unless VSOCK device configured)
-  boot.kernelParams = [ "systemd.ssh_auto=no" ];
+    # QXL video driver for better VM performance
+    services.xserver.videoDrivers = [ "qxl" ];
 
-  # Basic graphics
-  hardware.graphics = {
-    enable = true;
+    # VirtIO drivers
+    boot.initrd.kernelModules = [ "virtio_gpu" ];
+
+    # Disable systemd-ssh-generator VSOCK auto-binding (unless VSOCK device configured)
+    boot.kernelParams = [ "systemd.ssh_auto=no" ];
+
+    # Basic graphics
+    hardware.graphics = {
+      enable = true;
+    };
+
+    # No power management needed in VM
+    services.tlp.enable = lib.mkForce false;
+    services.power-profiles-daemon.enable = false;
+
+    # Filesystem trim support for thin-provisioned disks
+    services.fstrim.enable = true;
   };
-
-  # No power management needed in VM
-  services.tlp.enable = lib.mkForce false;
-  services.power-profiles-daemon.enable = false;
-
-  # Filesystem trim support for thin-provisioned disks
-  services.fstrim.enable = true;
 }

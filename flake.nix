@@ -1,8 +1,15 @@
 {
-  description = "NixOS configuration for mariogk";
+  description = "NixOS configuration (Dendritic Pattern)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Flake-parts for modular flake structure
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+
+    # Import-tree for automatic module discovery
+    import-tree.url = "github:vic/import-tree";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -36,45 +43,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, sops-nix, zen-browser, helium-browser, opencode, ... }@inputs:
-    let
-      lib = import ./lib { inherit inputs; };
-    in
-    {
-      nixosConfigurations = {
-        mariogk-notebook = lib.mkHost {
-          hostname = "mariogk-notebook";
-          system = "x86_64-linux";
-          hardwareModules = [ ./modules/hardware/intel-lunar-lake.nix ];
-        };
-
-        mariogk-desktop = lib.mkHost {
-          hostname = "mariogk-desktop";
-          system = "x86_64-linux";
-          hardwareModules = [ ./modules/hardware/amd-desktop.nix ];
-          profiles = [ ./modules/profiles/gaming.nix ];
-        };
-
-        plana-notebook = lib.mkHost {
-          hostname = "plana-notebook";
-          system = "x86_64-linux";
-          hardwareModules = [ ./modules/hardware/amd-laptop.nix ];
-        };
-
-        mariogk-vm = lib.mkHostHeadless {
-          hostname = "mariogk-vm";
-          system = "x86_64-linux";
-          hardwareModules = [ ./modules/hardware/proxmox-vm.nix ];
-        };
-
-        test-vm = lib.mkHost {
-          hostname = "test-vm";
-          system = "x86_64-linux";
-          hardwareModules = [ ./modules/hardware/qemu-vm.nix ];
-        };
-
-        # Live ISO for installation and recovery
-        live = lib.mkISO {};
-      };
-    };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      inputs.import-tree ./modules
+    );
 }

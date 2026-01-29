@@ -1,55 +1,57 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
-  fonts = {
-    enableDefaultPackages = true;
+  flake.modules.nixos.desktop-fonts = { config, lib, pkgs, ... }: {
+    fonts = {
+      enableDefaultPackages = true;
 
-    packages = with pkgs; [
-      # Microsoft fonts compatibility
-      corefonts
-      vistafonts
+      packages = with pkgs; [
+        # Microsoft fonts compatibility
+        corefonts
+        vistafonts
 
-      # Google fonts
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
+        # Google fonts
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-emoji
 
-      # Coding fonts
-      jetbrains-mono
-      fira-code
-      cascadia-code
+        # Coding fonts
+        jetbrains-mono
+        fira-code
+        cascadia-code
 
-      # Nerd fonts (for terminal)
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.fira-code
-      nerd-fonts.hack
-      nerd-fonts.meslo-lg
+        # Nerd fonts (for terminal)
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.fira-code
+        nerd-fonts.hack
+        nerd-fonts.meslo-lg
 
-      # System fonts
-      liberation_ttf
-      ubuntu_font_family
-      inter
+        # System fonts
+        liberation_ttf
+        ubuntu_font_family
+        inter
 
-      # Icons
-      font-awesome
-    ];
+        # Icons
+        font-awesome
+      ];
 
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        serif = [ "Noto Serif" "Liberation Serif" ];
-        sansSerif = [ "Inter" "Noto Sans" "Liberation Sans" ];
-        monospace = [ "JetBrains Mono" "Fira Code" ];
-        emoji = [ "Noto Color Emoji" ];
-      };
-
-      # Better font rendering
-      hinting = {
+      fontconfig = {
         enable = true;
-        style = "slight";
+        defaultFonts = {
+          serif = [ "Noto Serif" "Liberation Serif" ];
+          sansSerif = [ "Inter" "Noto Sans" "Liberation Sans" ];
+          monospace = [ "JetBrains Mono" "Fira Code" ];
+          emoji = [ "Noto Color Emoji" ];
+        };
+
+        # Better font rendering
+        hinting = {
+          enable = true;
+          style = "slight";
+        };
+        antialias = true;
+        subpixel.rgba = "rgb";
       };
-      antialias = true;
-      subpixel.rgba = "rgb";
     };
   };
 }
