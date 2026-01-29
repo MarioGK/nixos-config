@@ -7,6 +7,12 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
 
+      # Parallel downloads and builds
+      max-jobs = "auto";              # Build jobs in parallel (auto = number of CPUs)
+      cores = 0;                       # Cores per job (0 = all available)
+      http-connections = 50;           # Parallel HTTP connections for downloads
+      max-substitution-jobs = 128;     # Parallel substitution (download) jobs
+
       # Trusted users for remote builds
       trusted-users = [ "root" "@wheel" ];
 
