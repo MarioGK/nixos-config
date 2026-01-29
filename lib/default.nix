@@ -36,6 +36,7 @@ in
         ../modules/services/flatpak.nix
         ../modules/services/update-on-shutdown.nix
         ../modules/services/ssh.nix
+        ../modules/services/performance.nix
 
         # Programs
         ../modules/programs/containers.nix

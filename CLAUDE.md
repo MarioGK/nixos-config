@@ -32,6 +32,7 @@ nixos-config/
 | Flakes Overview | [01-flakes-overview.md](docs/01-flakes-overview.md) | What flakes are, benefits, and how to enable them |
 | Flake Structure | [02-flake-structure.md](docs/02-flake-structure.md) | Anatomy of flake.nix: inputs, outputs, and lock files |
 | Module Organization | [03-module-organization.md](docs/03-module-organization.md) | Module patterns, mkHost helper, and specialArgs |
+| Dendritic Pattern | [13-dendritic-pattern.md](docs/13-dendritic-pattern.md) | Feature-centric module organization with flake-parts |
 
 ### Configuration
 
@@ -136,6 +137,20 @@ Always use tasks (Task tool) and parallelize them whenever possible. When multip
 
 When searching for NixOS solutions or documentation, always prefer the **official NixOS Wiki** (https://wiki.nixos.org/) as the primary source. Check the wiki first before other sources, as it contains community-vetted solutions and up-to-date information for NixOS-specific issues.
 
+### Dendritic Pattern Requirement
+
+All new modules and configuration changes MUST follow the Dendritic Pattern:
+
+1. **Every file is a flake-parts module** - No nested imports or specialArgs
+2. **Feature-centric organization** - Group by capability, not by config type
+3. **Self-contained features** - Each file contains everything for that feature
+4. **Use deferredModule** - For NixOS/home-manager configs within flake-parts
+
+Before adding or modifying configuration:
+1. Read [13-dendritic-pattern.md](docs/13-dendritic-pattern.md)
+2. Ensure the change follows dendritic principles
+3. Use import-tree compatible file organization
+
 ## External Resources
 
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
@@ -144,3 +159,6 @@ When searching for NixOS solutions or documentation, always prefer the **officia
 - [NixOS & Flakes Book](https://nixos-and-flakes.thiscute.world/)
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
 - [Nix Pills](https://nixos.org/guides/nix-pills/)
+- [Dendritic Pattern](https://github.com/mightyiam/dendritic)
+- [import-tree](https://github.com/vic/import-tree)
+- [Dendrix](https://github.com/vic/dendrix)

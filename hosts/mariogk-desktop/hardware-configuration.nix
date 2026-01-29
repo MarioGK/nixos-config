@@ -1,8 +1,3 @@
-# TEMPLATE: Replace this file with output from:
-# nixos-generate-config --show-hardware-config
-#
-# Run this on the desktop machine to get the actual UUIDs and hardware configuration
-
 { config, lib, pkgs, modulesPath, ... }:
 
 {
@@ -16,24 +11,31 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # Filesystem configuration
-  # TODO: Replace UUIDs with actual values from hardware
+  # Root filesystem
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-ROOT-UUID";
-    fsType = "ext4";  # or "btrfs" if using Btrfs
+    device = "/dev/disk/by-uuid/bfd2a77e-3190-4aa6-bdf3-65c4f20809e0";
+    fsType = "ext4";
   };
 
+  # Boot partition
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-BOOT-UUID";
+    device = "/dev/disk/by-uuid/6C39-C366";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  # Swap configuration
-  # Option 1: Swap partition
-  # swapDevices = [
-  #   { device = "/dev/disk/by-uuid/REPLACE-WITH-SWAP-UUID"; }
-  # ];
+  # Secondary drives
+  fileSystems."/mnt/BigData" = {
+    device = "/dev/disk/by-uuid/9a7ca9a4-0d33-4532-b489-18c797600eee";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" ];
+  };
+
+  fileSystems."/mnt/FastData" = {
+    device = "/dev/disk/by-uuid/b156985e-0a5f-4406-90cf-e76b892062e1";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" ];
+  };
 
   # Hardware detection
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

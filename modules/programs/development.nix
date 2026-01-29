@@ -63,6 +63,7 @@ in
     # Editors and IDEs
     vscode
     rider-with-plugins
+    jetbrains-toolbox
 
     # AI tools
     claude-code

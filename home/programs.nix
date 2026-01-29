@@ -21,6 +21,17 @@ in
     Categories=Utility;Security;
   '';
 
+  # Autostart JetBrains Toolbox minimized
+  xdg.configFile."autostart/jetbrains-toolbox.desktop".text = ''
+    [Desktop Entry]
+    Name=JetBrains Toolbox
+    Exec=jetbrains-toolbox --minimize
+    Terminal=false
+    Type=Application
+    Icon=jetbrains-toolbox
+    X-GNOME-Autostart-enabled=true
+  '';
+
   # JetBrains Rider icon
   xdg.dataFile."icons/hicolor/scalable/apps/rider.svg".source = riderIcon;
 

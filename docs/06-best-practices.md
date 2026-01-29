@@ -362,6 +362,18 @@ Organize features into toggleable profiles:
 }
 ```
 
+## Dendritic Pattern
+
+For multi-platform configurations or when you want maximum flexibility,
+adopt the Dendritic Pattern:
+
+- Organize by features, not by configuration type
+- Use flake-parts as the top-level configuration
+- Auto-import modules with import-tree
+- Avoid specialArgs - use options instead
+
+See [Dendritic Pattern](./13-dendritic-pattern.md) for implementation details.
+
 ## Wayland Configuration
 
 ```nix

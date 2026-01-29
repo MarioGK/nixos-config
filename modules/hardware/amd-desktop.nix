@@ -9,7 +9,10 @@
 
   # Kernel modules for AMD
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "ixgbe" ];  # ixgbe for 10GbE NIC
+
+  # Filesystem support
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # AMD GPU configuration (RX 7700 - RDNA 3)
   hardware.graphics = {
@@ -40,12 +43,29 @@
     enable = true;
   };
 
-  # Diagnostic tools
+  # OpenRGB for RGB LED control
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
+
+  # Logitech Unifying Receiver
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;  # Solaar GUI
+  };
+
+  # Diagnostic and hardware tools
   environment.systemPackages = with pkgs; [
     radeontop      # AMD GPU monitoring
     lact           # GPU control GUI
     vulkan-tools   # vulkaninfo
     libva-utils    # vainfo
     clinfo         # OpenCL info
+    openrgb        # RGB LED control
+    solaar         # Logitech device manager
+    v4l-utils      # Video4Linux utilities
+    exfatprogs     # exFAT filesystem tools
+    ntfs3g         # NTFS filesystem support
   ];
 }

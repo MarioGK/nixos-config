@@ -338,6 +338,14 @@ in
 }
 ```
 
+## Dendritic Pattern (Advanced)
+
+For advanced configurations, consider the Dendritic Pattern where every file
+is a top-level flake-parts module. This eliminates specialArgs and enables
+feature-centric organization.
+
+See [Dendritic Pattern](./13-dendritic-pattern.md) for details.
+
 ## Further Reading
 
 - [NixOS Manual - Writing Modules](https://nixos.org/manual/nixos/stable/#sec-writing-modules)

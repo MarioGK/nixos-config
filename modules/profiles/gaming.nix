@@ -35,6 +35,13 @@
     protonup-qt    # GUI for managing Proton-GE versions
     gamescope      # SteamOS session compositor
     libnotify      # For gamemode notifications
+
+    # Wine (Windows compatibility)
+    wineWowPackages.stagingFull
+    winetricks
+
+    # Minecraft
+    prismlauncher
   ];
 
   # Security settings for gaming
