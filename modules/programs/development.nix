@@ -115,6 +115,12 @@ in
 
     # Add local tools to PATH
     export PATH="$HOME/.dotnet/tools:$PATH"
+
+    # Auto-install wasm-tools workload if not present
+    if ! dotnet workload list 2>/dev/null | grep -q "wasm-tools"; then
+      echo "Installing .NET wasm-tools workload..."
+      dotnet workload install wasm-tools --skip-sign-check 2>/dev/null || true
+    fi
   '';
 
   # Development-related services
