@@ -13,6 +13,10 @@
   # VirtIO drivers
   boot.initrd.kernelModules = [ "virtio_gpu" ];
 
+  # Blacklist vsock modules unless VSOCK device is configured in hypervisor
+  # Prevents "Failed to query local AF_VSOCK CID" errors
+  boot.blacklistedKernelModules = [ "vsock" "vmw_vsock_virtio_transport" "vmw_vsock_vmci_transport" ];
+
   # Basic graphics
   hardware.graphics = {
     enable = true;
