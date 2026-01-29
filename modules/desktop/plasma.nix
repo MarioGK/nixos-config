@@ -61,7 +61,7 @@
       kdePackages.spectacle     # Screenshots
       kdePackages.gwenview      # Image viewer
       kdePackages.okular        # Document viewer
-      kdePackages.haruna        # Video player
+      haruna                     # Video player (KDE/Qt based)
       kdePackages.filelight     # Disk usage
       kdePackages.partitionmanager  # Disk partitions
       kdePackages.kdeconnect-kde    # Phone integration
@@ -76,13 +76,12 @@
 
       # Wayland utilities
       wl-clipboard
-      xwaylandvideobridge  # For screen sharing
+      # xwaylandvideobridge removed - screen sharing handled by Plasma 6 natively
 
       # Desktop applications
-      bitwarden  # Password manager
+      bitwarden-desktop  # Password manager
       btop       # System monitor
       popsicle   # USB flasher
-      etcher     # USB flasher (balenaEtcher)
 
       # Spellcheck dictionaries
       hunspell
@@ -238,6 +237,19 @@
       WallpaperOpacity=1
     '';
 
+    # Bitwarden self-hosted configuration
+    xdg.configFile."Bitwarden/data.json".text = builtins.toJSON {
+      environmentUrls = {
+        base = "https://vw.mariogk.com";
+        api = null;
+        identity = null;
+        webVault = null;
+        icons = null;
+        notifications = null;
+        events = null;
+      };
+    };
+
     # plasma-manager for declarative KDE configuration
     programs.plasma = {
       enable = true;
@@ -258,7 +270,7 @@
       # Panel configuration
       panels = [
         {
-          location = "bottom";
+          location = "top";
           height = 44;
           floating = true;
 

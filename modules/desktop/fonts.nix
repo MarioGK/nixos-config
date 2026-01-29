@@ -8,12 +8,12 @@
       packages = with pkgs; [
         # Microsoft fonts compatibility
         corefonts
-        vistafonts
+        vista-fonts
 
         # Google fonts
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
+        noto-fonts-color-emoji
 
         # Coding fonts
         jetbrains-mono
@@ -28,7 +28,7 @@
 
         # System fonts
         liberation_ttf
-        ubuntu_font_family
+        ubuntu-classic
         inter
 
         # Icons

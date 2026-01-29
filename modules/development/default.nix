@@ -20,11 +20,6 @@
       '';
     });
 
-    # JetBrains Rider with plugins
-    rider-with-plugins = pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rider [
-      "github-copilot"  # AI pair programmer
-      "nixidea"         # Nix language support
-    ];
   in
   {
     # Development tools
@@ -64,7 +59,7 @@
 
       # Editors and IDEs
       vscode
-      rider-with-plugins
+      jetbrains.rider
       jetbrains-toolbox
 
       # AI tools

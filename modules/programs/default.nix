@@ -3,13 +3,6 @@
 {
   # Main desktop programs module
   flake.modules.homeManager.programs-desktop = { config, lib, pkgs, ... }:
-  let
-    # Fetch JetBrains Rider icon
-    riderIcon = pkgs.fetchurl {
-      url = "https://resources.jetbrains.com/storage/products/rider/img/meta/rider.svg";
-      hash = "sha256-htmBgLVqHxBfUFkkRR+F+I5UZb1i/kRW0uDnwCRIiqU=";
-    };
-  in
   {
     # Autostart Bitwarden minimized to tray
     xdg.configFile."autostart/bitwarden.desktop".text = ''
@@ -35,8 +28,7 @@
       X-GNOME-Autostart-enabled=true
     '';
 
-    # JetBrains Rider icon
-    xdg.dataFile."icons/hicolor/scalable/apps/rider.svg".source = riderIcon;
+    # JetBrains Rider icon - use system-provided icon instead
 
     # Custom MIME types for Visual Studio solution files
     xdg.dataFile."mime/packages/rider-sln.xml".text = ''

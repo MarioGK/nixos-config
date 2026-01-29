@@ -27,7 +27,7 @@
       virt-manager       # GUI for managing VMs
       virt-viewer        # Remote VM viewer
       spice-gtk          # Spice client
-      win-virtio         # VirtIO drivers for Windows guests
+      virtio-win         # VirtIO drivers for Windows guests
       swtpm              # TPM emulator
     ];
 
