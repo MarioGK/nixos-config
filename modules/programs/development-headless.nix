@@ -56,7 +56,7 @@ in
 
     # AI tools
     claude-code
-    opencode
+    # opencode  # Disabled: requires bun which uses CPU instructions not available on all systems
 
     # CLI utilities
     jq

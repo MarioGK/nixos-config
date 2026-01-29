@@ -10,6 +10,9 @@
 
     # plasma-manager for declarative KDE config
     inputs.plasma-manager.homeManagerModules.plasma-manager
+
+    # sops-nix for secrets management
+    inputs.sops-nix.homeManagerModules.sops
   ];
 
   home = {
@@ -36,6 +39,18 @@
       music = "${config.home.homeDirectory}/Music";
       pictures = "${config.home.homeDirectory}/Pictures";
       videos = "${config.home.homeDirectory}/Videos";
+    };
+  };
+
+  # sops-nix secrets configuration
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../secrets/secrets.yaml;
+
+    secrets = {
+      "claude-credentials" = {
+        path = "${config.home.homeDirectory}/.claude/.credentials.json";
+      };
     };
   };
 

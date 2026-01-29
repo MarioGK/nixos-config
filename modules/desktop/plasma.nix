@@ -4,6 +4,16 @@
   # KDE Plasma 6
   services.desktopManager.plasma6.enable = true;
 
+  # Touchpad configuration
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+      tapping = true;
+      disableWhileTyping = true;
+    };
+  };
+
   # Greetd with tuigreet (replaces SDDM)
   services.greetd = {
     enable = true;

@@ -4,10 +4,11 @@
   programs.git = {
     enable = true;
 
-    userName = "Mario";
     # userEmail is set via sops-nix secrets or manually
 
-    extraConfig = {
+    settings = {
+      user.name = "Mario";
+
       init.defaultBranch = "main";
 
       core = {
@@ -35,14 +36,12 @@
 
       diff = {
         colorMoved = "default";
+        algorithm = "histogram";
       };
 
       rebase = {
         autoStash = true;
       };
-
-      # Better diffs
-      diff.algorithm = "histogram";
 
       # URL shortcuts
       url = {
@@ -53,41 +52,18 @@
           insteadOf = "github:";
         };
       };
-    };
 
-    aliases = {
-      st = "status";
-      co = "checkout";
-      ci = "commit";
-      br = "branch";
-      unstage = "reset HEAD --";
-      last = "log -1 HEAD";
-      visual = "!gitk";
-      lg = "log --oneline --graph --decorate";
-      amend = "commit --amend --no-edit";
-      undo = "reset --soft HEAD~1";
-    };
-
-    # Delta for better diffs
-    delta = {
-      enable = true;
-      options = {
-        features = "side-by-side line-numbers decorations";
-        syntax-theme = "Dracula";
-        plus-style = "syntax #003800";
-        minus-style = "syntax #3f0001";
-        decorations = {
-          commit-decoration-style = "bold yellow box ul";
-          file-style = "bold yellow ul";
-          file-decoration-style = "none";
-          hunk-header-decoration-style = "cyan box ul";
-        };
-        line-numbers = {
-          line-numbers-left-style = "cyan";
-          line-numbers-right-style = "cyan";
-          line-numbers-minus-style = "124";
-          line-numbers-plus-style = "28";
-        };
+      alias = {
+        st = "status";
+        co = "checkout";
+        ci = "commit";
+        br = "branch";
+        unstage = "reset HEAD --";
+        last = "log -1 HEAD";
+        visual = "!gitk";
+        lg = "log --oneline --graph --decorate";
+        amend = "commit --amend --no-edit";
+        undo = "reset --soft HEAD~1";
       };
     };
 
@@ -122,6 +98,30 @@
       "result"
       "result-*"
     ];
+  };
+
+  # Delta for better diffs (now separate from programs.git)
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      features = "side-by-side line-numbers decorations";
+      syntax-theme = "Dracula";
+      plus-style = "syntax #003800";
+      minus-style = "syntax #3f0001";
+      decorations = {
+        commit-decoration-style = "bold yellow box ul";
+        file-style = "bold yellow ul";
+        file-decoration-style = "none";
+        hunk-header-decoration-style = "cyan box ul";
+      };
+      line-numbers = {
+        line-numbers-left-style = "cyan";
+        line-numbers-right-style = "cyan";
+        line-numbers-minus-style = "124";
+        line-numbers-plus-style = "28";
+      };
+    };
   };
 
   # GitHub CLI
