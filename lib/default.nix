@@ -41,6 +41,7 @@ in
         # Programs
         ../modules/programs/containers.nix
         ../modules/programs/development.nix
+        ../modules/programs/virtualization.nix
 
         # Home Manager
         inputs.home-manager.nixosModules.home-manager
