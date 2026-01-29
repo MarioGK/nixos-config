@@ -132,6 +132,10 @@ sudo nixos-rebuild switch --flake .#hostname
 
 Always use tasks (Task tool) and parallelize them whenever possible. When multiple independent operations need to be performed, launch them concurrently in a single message to maximize efficiency.
 
+### Documentation Priority
+
+When searching for NixOS solutions or documentation, always prefer the **official NixOS Wiki** (https://wiki.nixos.org/) as the primary source. Check the wiki first before other sources, as it contains community-vetted solutions and up-to-date information for NixOS-specific issues.
+
 ## External Resources
 
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)

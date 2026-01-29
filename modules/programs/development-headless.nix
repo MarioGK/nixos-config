@@ -81,10 +81,23 @@ in
   ];
 
   # .NET environment
+  # Workloads are installed to ~/.dotnet/workloads (writable location)
   environment.variables = {
     DOTNET_ROOT = "${dotnet-combined}";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+    # Enable workload installation to user directory instead of read-only Nix store
+    DOTNET_CLI_HOME = "$HOME/.dotnet";
   };
+
+  # Ensure .dotnet directory structure exists for workloads
+  environment.etc."profile.d/dotnet-workloads.sh".text = ''
+    # Create directories for .NET workloads if they don't exist
+    mkdir -p "$HOME/.dotnet/workloads"
+    mkdir -p "$HOME/.dotnet/metadata/workloads"
+
+    # Add local tools to PATH
+    export PATH="$HOME/.dotnet/tools:$PATH"
+  '';
 
   # Development-related services
   programs.direnv = {
