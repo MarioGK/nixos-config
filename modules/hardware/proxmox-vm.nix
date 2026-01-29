@@ -3,7 +3,7 @@
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  # QEMU guest agent for Proxmox integration
+  # QEMU guest agent for Proxmox integration (shutdown, freeze, IP reporting)
   services.qemuGuest.enable = true;
 
   # Virtio drivers for performance
@@ -14,6 +14,10 @@
 
   # Console for Proxmox serial access
   boot.kernelParams = [ "console=ttyS0,115200" ];
+
+  # No power management needed in VM
+  services.tlp.enable = lib.mkForce false;
+  services.power-profiles-daemon.enable = false;
 
   # Filesystem trim support for thin-provisioned disks
   services.fstrim.enable = true;
