@@ -43,6 +43,9 @@
         autoStash = true;
       };
 
+      # Safe directories (for repos owned by other users like /etc/nixos-config)
+      safe.directory = "/etc/nixos-config";
+
       # URL shortcuts
       url = {
         "git@github.com:" = {
